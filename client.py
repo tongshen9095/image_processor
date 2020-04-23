@@ -25,8 +25,10 @@ def uploadBtnCmd():
     fpath = selectImg()
     fname = parseName(fpath)
     b64_str = img2b64(fpath)
-    in_dict = makeDict(fname, fpath, b64_str)
-    print(in_dict)
+    img_size = getImgSize(fpath)
+    print(img_size)
+    #in_dict = makeDict(fname, fpath, b64_str)
+    #print(in_dict)
     #cpostImg(in_dict)
     return
 
@@ -76,7 +78,7 @@ def getImgSize(fpath):
     """
     im = Image.open(fpath)
     w, h = im.size
-    img_size = str(w + " x " + h)
+    img_size = str(w) + " x " + str(h)
     return img_size
 
 
