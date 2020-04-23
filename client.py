@@ -5,6 +5,7 @@ from tkinter import filedialog
 import os
 import base64
 import requests
+from PIL import Image
 
 server_name = "http://127.0.0.1:5000"
 
@@ -63,6 +64,20 @@ def img2b64(fpath):
         b64_bytes = base64.b64encode(image_file.read())
     b64_str = str(b64_bytes, encoding='utf-8')
     return b64_str
+
+
+def getImgSize(fpath):
+    """Compute the image size.
+
+    Args:
+        fpath (str): File path.
+    Returns:
+        img_size (str): width x height
+    """
+    im = Image.open(fpath)
+    w, h = im.size
+    img_size = str(w + " x " + h)
+    return img_size
 
 
 def makeDict(fname, fpath, b64_str):
