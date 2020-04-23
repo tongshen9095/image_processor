@@ -50,12 +50,24 @@ def img2b64(fpath):
     Args:
         fpath (str): File path.
     Return:
-        str: base64 representation of the iamge file.
+        str: base64 representation of the image file.
     """
     with open(fpath, "rb") as image_file:
         b64_bytes = base64.b64encode(image_file.read())
     b64_str = str(b64_bytes, encoding='utf-8')
     return b64_str
+
+def makeDict(fname, b64_str):
+    """Create the input dictionary.
+    
+    Args:
+        fname: File name.
+        b64_str: Base64 representation of the image file.
+    Returns:
+        dict: An dictionary.
+    """
+    in_dict = {"name": fname, "b64str": b64_str}
+    return in_dict
 
 
 if __name__ == "__main__":
