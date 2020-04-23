@@ -31,7 +31,15 @@ def selectImg():
 
 
 def parseName(fpath):
+    """Extract the file name from the file path.
+
+    Args:
+        fpath (str): File path.
+    Returns:
+        str: File name.
+    """
     return os.path.basename(fpath)
+
 
 if __name__ == "__main__":
     designWindow()
