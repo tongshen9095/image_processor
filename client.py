@@ -64,7 +64,7 @@ def img2b64(fpath):
     b64_str = str(b64_bytes, encoding='utf-8')
     return b64_str
 
-def makeDict(fname, b64_str, fpath):
+def makeDict(fname, fpath, b64_str):
     """Create the input dictionary.
     
     Args:
