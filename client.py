@@ -24,8 +24,9 @@ def uploadBtnCmd():
     fpath = selectImg()
     fname = parseName(fpath)
     b64_str = img2b64(fpath)
-    in_dict = makeDict(fname, b64_str)
-    cpostImg(in_dict)
+    in_dict = makeDict(fname, fpath, b64_str)
+    print(in_dict)
+    #cpostImg(in_dict)
     return
 
 
@@ -63,7 +64,7 @@ def img2b64(fpath):
     b64_str = str(b64_bytes, encoding='utf-8')
     return b64_str
 
-def makeDict(fname, b64_str):
+def makeDict(fname, b64_str, fpath):
     """Create the input dictionary.
     
     Args:
@@ -72,7 +73,7 @@ def makeDict(fname, b64_str):
     Returns:
         dict: An dictionary.
     """
-    in_dict = {"name": fname, "b64str": b64_str}
+    in_dict = {"name": fname, "dir": fpath, "b64str": b64_str}
     return in_dict
 
 
