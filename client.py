@@ -22,9 +22,8 @@ def designWindow():
 def uploadBtnCmd():
     """Command for upload botton."""
     fpath = selectImg()
-    fname = parseName(fpath)
     b64_str = img2b64(fpath)
-    in_dict = makeDict(fname, fpath, b64_str)
+    in_dict = makeDict(fpath, b64_str)
     print(in_dict)
     #cpostImg(in_dict)
     return
@@ -38,17 +37,6 @@ def selectImg():
     """
     fpath = filedialog.askopenfilename()
     return fpath
-
-
-def parseName(fpath):
-    """Extract the file name from the file path.
-
-    Args:
-        fpath (str): File path.
-    Returns:
-        str: File name.
-    """
-    return os.path.basename(fpath)
 
 
 def img2b64(fpath):
@@ -73,7 +61,7 @@ def makeDict(fname, fpath, b64_str):
     Returns:
         dict: An dictionary.
     """
-    in_dict = {"name": fname, "dir": fpath, "b64str": b64_str}
+    in_dict = {"dir": fpath, "b64str": b64_str}
     return in_dict
 
 
