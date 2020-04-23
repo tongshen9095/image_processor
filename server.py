@@ -1,16 +1,29 @@
 from flask import Flask, jsonify, request
+import logging
+import db
 
-"""
 app = Flask(__name__)
 
 @app.route("/api/new_img", method=["POST"])
 def postImg():
-    sample_dict = {"name": str, "b64str": str}
+    """Post request from server to add image to database.
+
+    returns:
+        (tuple): tuple containing:
+        str: Status message.
+        str: Status code.
+    """
+    sample_dict = {"name": str,
+                   "b64str": str,
+                   "imgsize": str,
+                   "timestamp": str}
     in_dict = request.get_json()
     isValid, msg = verifyInfo(in_dict, sample_dict)
     if not isValid:
         return msg, 400
-"""
+    logging.info("post a new image: {}".format(in_dict["name"]))
+    db.addImg(in_dict)
+    return "image added", 200
 
 
 def verifyInfo(in_dict, sample_dict):
