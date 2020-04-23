@@ -1,8 +1,16 @@
 from flask import Flask, jsonify, request
 
+"""
+app = Flask(__name__)
 
 @app.route("/api/new_img", method=["POST"])
 def postImg():
+    sample_dict = {"name": str, "b64str": str}
+    in_dict = request.get_json()
+    isValid, msg = verifyInfo(in_dict, sample_dict)
+    if not isValid:
+        return msg, 400
+"""
 
 
 def verifyInfo(in_dict, sample_dict):
