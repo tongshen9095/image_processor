@@ -13,5 +13,10 @@ def designWindow():
     root.mainloop()
     return
 
+
+def selectImg():
+    fpath = filedialog.askopenfilename()
+    return fpath
+
 if __name__ == "__main__":
-    designWindow()
+    print(selectImg())
