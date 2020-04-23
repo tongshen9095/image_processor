@@ -4,7 +4,7 @@ import db
 
 app = Flask(__name__)
 
-@app.route("/api/new_img", method=["POST"])
+@app.route("/api/new_img", methods=["POST"])
 def postImg():
     """Post request from server to add image to database.
 
