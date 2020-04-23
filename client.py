@@ -19,7 +19,7 @@ def designWindow():
 def uploadBtnCmd():
     fpath = selectImg()
     fname = parseName(fpath)
-    print(fname)
+
 
 def selectImg():
     """Select an image from file browser.
@@ -43,6 +43,13 @@ def parseName(fpath):
 
 
 def img2b64(fpath):
+    """Convert image file to base64 string.
+    
+    Args:
+        fpath (str): File path.
+    Return:
+        str: base64 representation of the iamge file.
+    """
     with open(fpath, "rb") as image_file:
         b64_bytes = base64.b64encode(image_file.read())
     b64_str = str(b64_bytes, encoding='utf-8')
