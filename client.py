@@ -4,6 +4,9 @@ from tkinter import messagebox
 from tkinter import filedialog
 import os
 import base64
+import requests
+
+server_name = "http://127.0.0.1:5000"
 
 def designWindow():
     root = Tk()
@@ -21,7 +24,8 @@ def uploadBtnCmd():
     fname = parseName(fpath)
     b64_str = img2b64(fpath)
     in_dict = makeDict(fname, b64_str)
-    print(in_dict)
+    cpostImg(in_dict)
+    return
 
 
 def selectImg():
@@ -69,6 +73,22 @@ def makeDict(fname, b64_str):
     """
     in_dict = {"name": fname, "b64str": b64_str}
     return in_dict
+
+
+def cpostImg(in_dict):
+    """Post request from client site.
+
+    Args:
+        in_dict (dict): An input dictionary.
+    """
+    r = requests.post(server_name + "/api/new_img", json=in_dict)
+    if r.status_code == 200:
+        msg = "Success: {} - {}".format(r.status_code, r.text)
+        messagebox.showinfo(message=msg, title="upload")
+    else:
+        msg = "Error: {} - {}".format(r.status_code, r.text)
+        messagebox.showinfo(message=msg,title="upload", icon="error")
+    return
 
 
 if __name__ == "__main__":
