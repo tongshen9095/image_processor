@@ -91,10 +91,12 @@ def makeDict(fname, b64_str, img_size):
     Returns:
         dict: An dictionary.
     """
+    curr_time = datetime.datetime.strptime(datetime.datetime.now(),
+                                           '%Y-%m-%d %H:%M:%S.%f')
     in_dict = {"name": fname,
                "b64str": b64_str,
                "imgsize": img_size,
-               "timestamp": datetime.datetime.now()}
+               "timestamp": curr_time}
     return in_dict
 
 
