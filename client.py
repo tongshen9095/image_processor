@@ -12,3 +12,6 @@ def designWindow():
 
     root.mainloop()
     return
+
+if __name__ == "__main__":
+    designWindow()
