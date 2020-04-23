@@ -45,8 +45,8 @@ def parseName(fpath):
 def img2b64(fpath):
     with open(fpath, "rb") as image_file:
         b64_bytes = base64.b64encode(image_file.read())
-    b64_string = str(b64_bytes, encoding='utf-8')
-    return b64_string
+    b64_str = str(b64_bytes, encoding='utf-8')
+    return b64_str
 
 
 if __name__ == "__main__":
