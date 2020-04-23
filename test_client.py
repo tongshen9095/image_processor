@@ -40,6 +40,17 @@ def test_img2b64(fpath, expt):
     assert b64_str[0:20] == expt
 
 
+@pytest.mark.parametrize("fpath, expt", [
+    (fpath1, "512 x 512"),
+    (fpath2, "1024 x 1245"),
+    (fpath3, "228 x 369")
+])
+def test_getImgSize(fpath, expt):
+    from client import getImgSize
+    img_size = getImgSize(fpath)
+    assert img_size == expt
+
+
 @pytest.mark.parametrize("fname, fpath, b64_str, expt", [
     (fname1, fpath1, b64_str1, expt_dict1),
     (fname2, fpath2, b64_str2, expt_dict2),
