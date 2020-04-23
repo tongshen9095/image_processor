@@ -18,6 +18,11 @@ def uploadBtnCmd():
     fpath = selectImg()
 
 def selectImg():
+    """Select an image from file browser.
+    
+    Returns:
+        str: File path of the selected image.
+    """
     fpath = filedialog.askopenfilename()
     return fpath
 
