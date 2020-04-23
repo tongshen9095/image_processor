@@ -20,7 +20,8 @@ def uploadBtnCmd():
     fpath = selectImg()
     fname = parseName(fpath)
     b64_str = img2b64(fpath)
-    print(b64_str[:20])
+    in_dict = makeDict(fname, b64_str)
+    print(in_dict)
 
 
 def selectImg():
