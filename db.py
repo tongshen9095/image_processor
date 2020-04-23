@@ -1,7 +1,7 @@
 from pymodm import connect, MongoModel, fields
 
 class Image(MongoModel):
-    name = fields.CharField()
+    name = fields.CharField(primary_key=True)
     b64str = fields.CharField()
     imgsize = fields.CharField()
     timestamp = fields.CharField()
