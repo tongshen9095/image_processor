@@ -1,6 +1,6 @@
 import pytest
 
-common_dir = "/Users/tong/Documents/bme547/final-project-tongshen9095/images/"
+common_dir = "./images/"
 
 fname1 = "acl1.jpg"
 fname2 = "esophagus2.jpg"
