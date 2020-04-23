@@ -24,6 +24,6 @@ def addImg(in_dict):
     img = Image(name=in_dict["name"],
                 b64str=in_dict["b64str"],
                 imgsize = in_dict["imgsize"],
-                timestame=in_dict["timestamp"])
+                timestamp=in_dict["timestamp"])
     img.save()
                 
