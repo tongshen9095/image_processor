@@ -20,6 +20,7 @@ def designWindow():
 
 
 def uploadBtnCmd():
+    """Command for upload botton."""
     fpath = selectImg()
     fname = parseName(fpath)
     b64_str = img2b64(fpath)
@@ -76,7 +77,7 @@ def makeDict(fname, b64_str):
 
 
 def cpostImg(in_dict):
-    """Post request from client site.
+    """Post requet from client site to upload image.
 
     Args:
         in_dict (dict): An input dictionary.
@@ -87,7 +88,7 @@ def cpostImg(in_dict):
         messagebox.showinfo(message=msg, title="upload")
     else:
         msg = "Error: {} - {}".format(r.status_code, r.text)
-        messagebox.showinfo(message=msg,title="upload", icon="error")
+        messagebox.showinfo(message=msg, title="upload", icon="error")
     return
 
 
