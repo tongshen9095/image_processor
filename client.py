@@ -27,7 +27,7 @@ def uploadBtnCmd():
     fname = parseName(fpath)
     b64_str = img2b64(fpath)
     img_size = getImgSize(fpath)
-    in_dict = makeDict(fname, fpath, b64_str)
+    in_dict = makeDict(fname, b64_str, img_size)
     cpostImg(in_dict)
     return
 
