@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 from tkinter import filedialog
+import os
 
 def designWindow():
     root = Tk()
@@ -16,6 +17,8 @@ def designWindow():
 
 def uploadBtnCmd():
     fpath = selectImg()
+    fname = parseName(fpath)
+    print(fname)
 
 def selectImg():
     """Select an image from file browser.
@@ -25,6 +28,10 @@ def selectImg():
     """
     fpath = filedialog.askopenfilename()
     return fpath
+
+
+def parseName(fpath):
+    return os.path.basename(fpath)
 
 if __name__ == "__main__":
     designWindow()
