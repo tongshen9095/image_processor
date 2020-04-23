@@ -6,6 +6,7 @@ import os
 import base64
 import requests
 from PIL import Image
+import datetime
 
 server_name = "http://127.0.0.1:5000"
 
@@ -82,17 +83,20 @@ def getImgSize(fpath):
     return img_size
 
 
-def makeDict(fname, fpath, b64_str):
+def makeDict(fname, b64_str, img_size):
     """Create the input dictionary.
     
     Args:
         fname (str): File name.
-        fpath (str): File path.
         b64_str (str): Base64 representation of the image file.
+        img_size (str): Image size.
     Returns:
         dict: An dictionary.
     """
-    in_dict = {"name": fname, "dir": fpath, "b64str": b64_str}
+    in_dict = {"name": fname,
+               "b64str": b64_str,
+               "imgsize": img_size,
+               "timestamp": datetime.datetime.now()}
     return in_dict
 
 
