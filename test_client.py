@@ -22,6 +22,7 @@ expt_dict1 = {"name": fname1, "b64str": b64_str1, "imgsize": img_size1}
 expt_dict2 = {"name": fname2, "b64str": b64_str2, "imgsize": img_size2}
 expt_dict3 = {"name": fname3, "b64str": b64_str3, "imgsize": img_size3}
 
+
 @pytest.mark.parametrize("fpath, expt", [
     (fpath1, "acl1.jpg"),
     (fpath2, "esophagus2.jpg"),

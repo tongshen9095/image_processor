@@ -2,7 +2,7 @@ import pytest
 
 sample_dict = {"name": str, "b64str": str}
 in_dict1 = {"imgname": "apple.jpg", "b64str": 123}
-expt1 =  (False, "name key not found")
+expt1 = (False, "name key not found")
 in_dict2 = {"name": "apple.jpg", "b64str": 123}
 expt2 = (False, "b64str value not correct type")
 in_dict3 = {"name": "apple.jpg", "b64str": "123"}

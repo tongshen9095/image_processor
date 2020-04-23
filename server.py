@@ -4,6 +4,7 @@ import db
 
 app = Flask(__name__)
 
+
 @app.route("/api/new_img", methods=["POST"])
 def postImg():
     """Post request from server to add image to database.
@@ -31,7 +32,7 @@ def verifyInfo(in_dict, sample_dict):
     An input dictionary is valid when 1) all the keys in the sample dictionary
     can be found in the input dictionary; 2) values in the input dictionary
     should have the same datatype as what in the smaple dictionary
-    
+
     Args:
         in_dict (dict): An input dictionary.
         sample_dict (dict): An sample dictionary.

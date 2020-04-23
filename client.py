@@ -10,6 +10,7 @@ import datetime
 
 server_name = "http://127.0.0.1:5000"
 
+
 def designWindow():
     root = Tk()
 
@@ -34,7 +35,7 @@ def uploadBtnCmd():
 
 def selectImg():
     """Select an image from file browser.
-    
+
     Returns:
         str: File path of the selected image.
     """
@@ -55,7 +56,7 @@ def parseName(fpath):
 
 def img2b64(fpath):
     """Convert image file to base64 string.
-    
+
     Args:
         fpath (str): File path.
     Return:
@@ -83,7 +84,7 @@ def getImgSize(fpath):
 
 def makeDict(fname, b64_str, img_size):
     """Create the input dictionary.
-    
+
     Args:
         fname (str): File name.
         b64_str (str): Base64 representation of the image file.
