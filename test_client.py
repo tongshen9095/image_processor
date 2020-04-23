@@ -55,7 +55,7 @@ def test_getImgSize(fpath, expt):
     assert img_size == expt
 
 
-@pytest.mark.parametrize("fname, fpath, b64_str, expt", [
+@pytest.mark.parametrize("fname, b64_str, img_size, expt", [
     (fname1, b64_str1, img_size1, expt_dict1),
     (fname2, b64_str2, img_size2, expt_dict2),
     (fname3, b64_str3, img_size3, expt_dict3),
