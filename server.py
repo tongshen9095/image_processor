@@ -39,6 +39,19 @@ def getNames():
     return jsonify(ans)
 
 
+@app.route("/api/<img_name>", methods=["GET"])
+def getImg(img_name):
+    """Get the information of an image.
+
+    Args:
+        img_name (str): Name of the image.
+    Returns:
+        dict: An dictionary contains image information.
+    """
+    in_dict = db.getImg(img_name)
+    return jsonify(in_dict)
+
+
 def verifyInfo(in_dict, sample_dict):
     """Verify whether the input dictionary is valid.
     An input dictionary is valid when 1) all the keys in the sample dictionary
