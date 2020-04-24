@@ -18,6 +18,11 @@ server_name = "http://127.0.0.1:5000"
 def mainWindow():
     root = Tk()
 
+    # Add a upload button
+    upload_btn = ttk.Button(root, text="Upload", command=uploadBtnCmd)
+    upload_btn.grid(column=0, row=0)
+
+    # Add a main display buttun
     def popDisplayWindow():
         windowsize = "500x600"
         window = Toplevel(root)
@@ -42,28 +47,20 @@ def mainWindow():
         img_label.grid(column=0, row=1, columnspan=2)
 
         # Add a display button
-        display_btn = ttk.Button(window, text="display", command=displayBtnCmd)
-        display_btn.grid(column=0, row=2, columnspan=2)
-
         def displayBtnCmd():
             img_name = img_choice.get()
             tk_img = getTkImg(img_name)
             img_label.image = tk_img
             img_label.configure(image=tk_img)
             return
-
+        
+        display_btn = ttk.Button(window, text="display", command=displayBtnCmd)
+        display_btn.grid(column=0, row=2, columnspan=2)å
         return
-
-    # Add a upload button
-    upload_btn = ttk.Button(root, text="Upload", command=uploadBtnCmd)
-    upload_btn.grid(column=0, row=0)
-
-    # Add a main display buttun
+    
     main_display_btn = ttk.Button(root, text="Display",
                                   command=popDisplayWindow)
     main_display_btn.grid(column=1, row=0)
-
-
 
     root.mainloop()
     return
