@@ -39,7 +39,7 @@ def getNames():
     return jsonify(ans)
 
 
-@app.route("/api/<img_name>", methods=["GET"])
+@app.route("/api/img/<img_name>", methods=["GET"])
 def getImg(img_name):
     """Get the information of an image.
 
