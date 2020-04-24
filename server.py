@@ -36,6 +36,9 @@ def getNames():
         list: A list of image names.
     """
     ans = db.getNames()
+    print("server")
+    print(ans)
+    print(jsonify(ans))
     return jsonify(ans)
 
 
