@@ -289,5 +289,17 @@ def imgResize(img_size, dw):
         new_x = x * new_y // y
     return new_x, new_y
 
+
+def b64_to_img(b64_str, fpath):
+    """Convert b64 string to image file.
+
+    Args:
+        b64_str (str): Base64 representation of an image file.
+    """
+    img_bytes = base64.b64decode(b64_str)
+    with open(fpath, "wb") as out_file:
+        out_file.writ(img_bytes)
+    return
+
 if __name__ == "__main__":
     mainWindow()
