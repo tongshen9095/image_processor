@@ -43,5 +43,6 @@ def getNames():
     ans = []
     for img in imgs:
         ans.append(img.name)
+    ans = tuple(ans)
     return ans
 
