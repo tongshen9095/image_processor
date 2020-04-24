@@ -19,8 +19,9 @@ def mainWindow():
     root = Tk()
 
     def popDisplayWindow():
+        windowsize = "500x600"
         window = Toplevel(root)
-        window.geometry("500x600")
+        window.geometry(windowsize)
 
         # Add a select label
         select_label = ttk.Label(window, text="Select an image")
@@ -33,7 +34,8 @@ def mainWindow():
         img_choice_box["values"] = cgetNames()
 
         # put a blank image
-        img_obj = Image.open("./images/blank.png").resize((500, 500))
+        dw = 500
+        img_obj = Image.open("./images/blank.png").resize((dw, dw))
         tk_img = ImageTk.PhotoImage(img_obj)
         img_label = ttk.Label(window, image=tk_img)
         img_label.image = tk_img
