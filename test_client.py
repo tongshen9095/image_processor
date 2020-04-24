@@ -46,9 +46,9 @@ def test_img2b64(fpath, expt):
 
 
 @pytest.mark.parametrize("fpath, expt", [
-    (fpath1, "512 x 512"),
-    (fpath2, "1024 x 1245"),
-    (fpath3, "228 x 369")
+    (fpath1, img_size1),
+    (fpath2, img_size2),
+    (fpath3, img_size3)
 ])
 def test_getImgSize(fpath, expt):
     from client import getImgSize
