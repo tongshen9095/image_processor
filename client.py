@@ -32,8 +32,7 @@ def mainWindow():
         img_choice_box["values"] = cgetNames()
 
         # put a blank image
-        img_obj = Image.open("./images/blank.png")
-        img_obj.resize(250, 250)
+        img_obj = Image.open("./images/blank.png").resize((500, 500))
         tk_img = ImageTk.PhotoImage(img_obj)
         img_label = ttk.Label(window, image=tk_img)
         img_label.image = tk_img
