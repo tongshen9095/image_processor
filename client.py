@@ -14,7 +14,7 @@ from skimage.io import imsave
 
 server_name = "http://127.0.0.1:5000"
 
-"""
+
 def mainWindow():
     root = Tk()
 
@@ -36,12 +36,19 @@ def mainWindow():
         img_choice = StringVar()
         img_choice_box = ttk.Combobox(window, textvariable=img_choice)
         img_choice_box.grid(column=1, row=0)
-        choice_box["values"] = cgetNames()
+        img_choice_box["values"] = cgetNames()
 
         # put a blank image
+        img_obj = Image.open("./images/blank.png")
+        tk_img = ImageTk.PhotoImage(img_obj)
+        img_label = ttklabel(window, i,age=tk_image)
+        img_label.image = tk_img
+        img_label.grid(column=0, row=1, columnspan=2)
+
+
     root.mainloop()
     return
-"""
+
 
 
 def uploadBtnCmd():
@@ -210,5 +217,4 @@ def ndarray2img(img_ndarray):
 
 
 if __name__ == "__main__":
-    ans = cgetImg("acl1.jpg")
-    print(ans, type(ans))
+    mainWindow()
