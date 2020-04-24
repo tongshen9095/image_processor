@@ -33,6 +33,7 @@ def mainWindow():
 
         # put a blank image
         img_obj = Image.open("./images/blank.png")
+        img_obj.resize(250, 250)
         tk_img = ImageTk.PhotoImage(img_obj)
         img_label = ttk.Label(window, image=tk_img)
         img_label.image = tk_img
