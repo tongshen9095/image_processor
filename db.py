@@ -31,3 +31,17 @@ def addImg(in_dict):
                 timestamp=in_dict["timestamp"])
     img.save()
     return
+
+
+def getNames():
+    """Get a list of image names.
+
+    Returns:
+        list: a list of image names.
+    """
+    imgs = Image.objects.raw({})
+    ans = []
+    for img in imgs:
+        ans.append(img.name)
+    return ans
+
