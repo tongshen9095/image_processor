@@ -63,7 +63,7 @@ def mainWindow():
             line1 = "timestamp: {}".format(in_dict["timestamp"])
             line2 = "image size: {} pixels".format(in_dict["imgsize"])
             text_box.insert(END, line1+"\n"+line2)
-        info_btn = ttk.Button(window, text="display", command=infoBtnCmd)
+        info_btn = ttk.Button(window, text="Info", command=infoBtnCmd)
         xp, yp = 55, 95
         info_btn.place(x=dw*xp//100, y=dh*yp//100)
 
@@ -87,7 +87,7 @@ def mainWindow():
             img_label.place(x=(dw-x)//2, y=(dw-y)//2+dh*yp//100)
             return
 
-        display_btn = ttk.Button(window, text="display", command=displayBtnCmd)
+        display_btn = ttk.Button(window, text="Display", command=displayBtnCmd)
         xp, yp = 15, 95
         display_btn.place(x=dw*xp//100, y=dh*yp//100)
         return
