@@ -40,11 +40,19 @@ def mainWindow():
         img_label = ttk.Label(window, image=tk_img)
         img_label.image = tk_img
         img_label.grid(column=0, row=1, columnspan=2)
-        return
 
         # Add a display button
         display_btn = ttk.Button(window, text="display", command=displayBtnCmd)
         display_btn.grid(column=0, row=2, columnspan=2)
+
+        def displayBtnCmd():
+            img_name = img_choice.get()
+            tk_img = getTkImg(img_name)
+            img_label.image = tk_img
+            img_label.configure(image=tk_img)
+            return
+
+        return
 
     # Add a upload button
     upload_btn = ttk.Button(root, text="Upload", command=uploadBtnCmd)
