@@ -22,6 +22,21 @@ expt_dict1 = {"name": fname1, "b64str": b64_str1, "imgsize": img_size1}
 expt_dict2 = {"name": fname2, "b64str": b64_str2, "imgsize": img_size2}
 expt_dict3 = {"name": fname3, "b64str": b64_str3, "imgsize": img_size3}
 
+img_ndarray1 = [[0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0]]
+img_ndarray2 = [[205, 205, 205],
+                [205, 205, 205],
+                [205, 205, 205],
+                [205, 205, 205],
+                [205, 205, 205]]
+img_ndarray3 = [[3, 3, 3],
+                [2, 2, 2],
+                [0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0]]
 
 @pytest.mark.parametrize("fpath, expt", [
     (fpath1, "acl1.jpg"),
@@ -67,3 +82,10 @@ def test_makeDict(fname, b64_str, img_size, expt):
     expt["processed"] = False
     expt["timestamp"] = in_dict["timestamp"]
     assert in_dict == expt
+
+
+@pytest.mark.parametrize
+def test_b64_to_ndarray(b64_str, expt):
+    from client import b64_to_ndarray
+    ans = b64_to_ndarray(b64_str)
+    assert (ans[0][0:5] == expt).all
