@@ -20,6 +20,7 @@ def mainWindow():
 
     def popDisplayWindow():
         window = Toplevel(root)
+        window.geometry("800 x 800")
 
         # Add a select label
         select_label = ttk.Label(window, text="Select an image")
