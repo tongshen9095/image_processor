@@ -38,6 +38,10 @@ img_ndarray3 = [[3, 3, 3],
                 [0, 0, 0],
                 [0, 0, 0]]
 
+img_size_adjust1 = (500, 500)
+img_size_adjust2 = (411, 500)
+img_size_adjust3 = (228, 369)
+
 @pytest.mark.parametrize("fpath, expt", [
     (fpath1, "acl1.jpg"),
     (fpath2, "esophagus2.jpg"),
@@ -94,3 +98,14 @@ def test_b64_to_ndarray(fpath, expt):
     b64_str = img2b64(fpath)
     ans = b64_to_ndarray(b64_str)
     assert (ans[0][0:5] == expt).all
+
+
+@pytest.mark.parametrize("img_size, dw, expt", [
+    (img_size1, 500, img_size_adjust1),
+    (img_size2, 500, img_size_adjust2),
+    (img_size3, 500, img_size_adjust3)
+])
+def test_imgResize(img_size, dw, expt):
+    from client import imgResize
+    ans = imgResize(img_size, dw)
+    assert ans == expt
