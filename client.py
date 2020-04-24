@@ -68,7 +68,7 @@ def mainWindow():
             line2 = "image size: {} pixels".format(in_dict["imgsize"])
             text_box.insert(END, line1+"\n"+line2)
             return
-        info_btn = ttk.Button(window, text="Info", command=infoBtnCmd)
+        info_btn = ttk.Button(window, text="Display", command=infoBtnCmd)
         xp, yp = 60, 95
         info_btn.place(x=dw*xp//100, y=dh*yp//100)
 
