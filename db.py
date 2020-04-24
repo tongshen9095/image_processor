@@ -45,6 +45,7 @@ def getNames():
         ans.append(img.name)
     return ans
 
+
 def hasImg(img_name):
     """Check wheter an image is in the database.
 
@@ -58,6 +59,7 @@ def hasImg(img_name):
         return True
     except:
         return False
+
 
 def getImg(img_name):
     """Get an image form the database.

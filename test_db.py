@@ -1,8 +1,10 @@
 import pytest
+import db
 
+db.initDb()
 
 @pytest.mark.parametrize("img_name, expt", [
-    ("acl1.jpg", True),
+    ('esophagus2.jpg', True),
     ("acl2.jpg", True),
     ("abc.jpg", False)
 
