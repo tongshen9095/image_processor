@@ -45,3 +45,17 @@ def getNames():
         ans.append(img.name)
     return ans
 
+def hasImg(img_name):
+    """Check wheter an image is in the database.
+
+    Args:
+        img_name (str): Name of the image.
+    Returns:
+        (bool): True if the image is in the database else False.
+    """
+    try:
+        Image.objects.raw({"_id": img_name}).first()
+        return True
+    except:
+        return False
+
