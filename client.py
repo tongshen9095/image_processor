@@ -171,8 +171,8 @@ def b64_to_ndarray(b64_str):
     """
     img_bytes = base64.b64decode(b64_str)
     img_buf = io.BytesIO(img_bytes)
-    img_ndarray = mpimg.imread(img_buf, format='JPG')
-    return img_ndarray
+    ndarray = mpimg.imread(img_buf, format='JPG')
+    return ndarray
 
 
 if __name__ == "__main__":
