@@ -59,3 +59,14 @@ def hasImg(img_name):
     except:
         return False
 
+def getImg(img_name):
+    """Get an image form the database.
+
+    Args:
+        img_name (str): Name of the image.
+    Returns:
+        dict: An dictionary of the image info.
+    """
+    
+
+
