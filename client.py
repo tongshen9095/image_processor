@@ -5,18 +5,78 @@ from tkinter import filedialog
 import os
 import base64
 import requests
-from PIL import Image
+from PIL import Image, ImageTk
 import datetime
+import json
+import io
+import matplotlib.image as mpimg
+from skimage.io import imsave
 
 server_name = "http://127.0.0.1:5000"
 
 
-def designWindow():
+def mainWindow():
     root = Tk()
 
-    # Add upload button
+    # Add a upload button
     upload_btn = ttk.Button(root, text="Upload", command=uploadBtnCmd)
     upload_btn.grid(column=0, row=0)
+
+    # Add a main display buttun
+    def popDisplayWindow():
+        dw = 500
+        dh = 600
+        windowsize = str(dw) + "x" + str(dh)
+        window = Toplevel(root)
+        window.geometry(windowsize)
+
+        # Add a select label
+        select_label = ttk.Label(window, text="Select an image")
+        xp, yp = 15, 2
+        select_label.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a choice box
+        img_choice = StringVar()
+        img_choice_box = ttk.Combobox(window, textvariable=img_choice)
+        xp, yp = 55, 2
+        img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
+        img_choice_box["values"] = cgetNames()
+
+        # Put a blank image
+        img_obj = Image.open("./images/blank.png").resize((dw, dw))
+        tk_img = ImageTk.PhotoImage(img_obj)
+        img_label = ttk.Label(window, image=tk_img)
+        img_label.image = tk_img
+        xp, yp = 0, 8
+        img_label.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a display button
+        def displayBtnCmd():
+            # Put a blank image
+            img_obj = Image.open("./images/blank.png").resize((dw, dw))
+            tk_img = ImageTk.PhotoImage(img_obj)
+            img_label = ttk.Label(window, image=tk_img)
+            img_label.image = tk_img
+            xp, yp = 0, 8
+            img_label.place(x=dw*xp//100, y=dh*yp//100)
+
+            # Put medical image on top of the blank image
+            img_name = img_choice.get()
+            in_dict = cgetImg(img_name)
+            x, y = imgResize(in_dict["imgsize"], dw)
+            tk_img = getTkImg(in_dict["b64str"], x, y)
+            img_label = ttk.Label(window, image=tk_img)
+            img_label.image = tk_img
+            img_label.place(x=(dw-x)//2, y=(dw-y)//2+dh*yp//100)
+            return
+
+        display_btn = ttk.Button(window, text="display", command=displayBtnCmd)
+        display_btn.place(x=dw*40//100, y=dh*95//100)
+        return
+
+    main_display_btn = ttk.Button(root, text="Display",
+                                  command=popDisplayWindow)
+    main_display_btn.grid(column=1, row=0)
 
     root.mainloop()
     return
@@ -31,6 +91,18 @@ def uploadBtnCmd():
     in_dict = makeDict(fname, b64_str, img_size)
     cpostImg(in_dict)
     return
+
+
+def getTkImg(b64_str, x, y):
+    """Get tk image with the name of the image.
+    Args:
+        b64 (str): Base64 representation of the image.
+    Returns:
+        tk image object
+    """
+    img_ndarray = b64_to_ndarray(b64_str)
+    tk_img = ndarray2img(img_ndarray, x, y)
+    return tk_img
 
 
 def selectImg():
@@ -78,7 +150,7 @@ def getImgSize(fpath):
     """
     im = Image.open(fpath)
     w, h = im.size
-    img_size = str(w) + " x " + str(h)
+    img_size = str(w) + "x" + str(h)
     return img_size
 
 
@@ -118,5 +190,82 @@ def cpostImg(in_dict):
     return
 
 
+def cgetNames():
+    """Get request from client site to get a list of image names.
+
+    Returns:
+        list: A list of image names.
+    """
+    r = requests.get(server_name + "/api/all_imgs")
+    ans = json.loads(r.text)
+    ans = tuple(ans)
+    return ans
+
+
+def cgetImg(img_name):
+    """Get request from client site to get the information of an image.
+
+    Args:
+        img_name (str): Name of an image.
+    Returns:
+        dict: An dictionary of image information.
+    """
+    r = requests.get(server_name + "/api/img/{}".format(img_name))
+    return json.loads(r.text)
+
+
+def b64_to_ndarray(b64_str):
+    """Convert base64 string to ndarray.
+
+    Args:
+        b64_str (str): base64 string.
+    Returns:
+        ndarray: An ndarray containing image data.
+    """
+    img_bytes = base64.b64decode(b64_str)
+    img_buf = io.BytesIO(img_bytes)
+    img_ndarray = mpimg.imread(img_buf, format='JPG')
+    return img_ndarray
+
+
+def ndarray2img(img_ndarray, x, y):
+    """Convert ndarray to tk image.
+
+    Args:
+        img_ndarray: An ndarray containing image data.
+        x: width of the new size
+        y: height of the new size
+    Returns:
+        tk_image object
+    """
+    f = io.BytesIO()
+    imsave(f, img_ndarray, plugin='pil')
+    out_img = io.BytesIO()
+    out_img.write(f.getvalue())
+    img_obj = Image.open(out_img).resize((x, y))
+    tk_image = ImageTk.PhotoImage(img_obj)
+    return tk_image
+
+
+def imgResize(img_size, dw):
+    """Resize the image based on the default window width.
+
+    Args:
+        img_size (str): Original image size.
+        dw (int): Default window width.
+    Returns:
+        tuple: Adjusted image size.
+    """
+    img_size = img_size.split("x")
+    x, y = img_size
+    x, y = int(x), int(y)
+    if x > y:
+        new_x = min(x, dw)
+        new_y = y * new_x // x
+    else:
+        new_y = min(y, dw)
+        new_x = x * new_y // y
+    return new_x, new_y
+
 if __name__ == "__main__":
-    designWindow()
+    mainWindow()

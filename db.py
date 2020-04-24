@@ -31,3 +31,49 @@ def addImg(in_dict):
                 timestamp=in_dict["timestamp"])
     img.save()
     return
+
+
+def getNames():
+    """Get a list of image names.
+
+    Returns:
+        list: a list of image names.
+    """
+    imgs = Image.objects.raw({})
+    ans = []
+    for img in imgs:
+        ans.append(img.name)
+    return ans
+
+
+def hasImg(img_name):
+    """Check wheter an image is in the database.
+
+    Args:
+        img_name (str): Name of the image.
+    Returns:
+        (bool): True if the image is in the database else False.
+    """
+    try:
+        Image.objects.raw({"_id": img_name}).first()
+        return True
+    except:
+        return False
+
+
+def getImg(img_name):
+    """Get an image form the database.
+
+    Args:
+        img_name (str): Name of the image.
+    Returns:
+        dict: An dictionary of the image info.
+    """
+    img = Image.objects.raw({"_id": img_name}).first()
+    in_dict = {}
+    in_dict["name"] = img.name
+    in_dict["b64str"] = img.b64str
+    in_dict["imgsize"] = img.imgsize
+    in_dict["processed"] = img.processed
+    in_dict["timestamp"] = img.timestamp
+    return in_dict
