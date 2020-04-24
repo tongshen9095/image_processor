@@ -5,11 +5,12 @@ from tkinter import filedialog
 import os
 import base64
 import requests
-from PIL import Image
+from PIL import Image, ImageTk
 import datetime
 import json
 import io
 import matplotlib.image as mpimg
+from skimage.io import imsave
 
 server_name = "http://127.0.0.1:5000"
 
@@ -52,6 +53,20 @@ def uploadBtnCmd():
     in_dict = makeDict(fname, b64_str, img_size)
     cpostImg(in_dict)
     return
+
+
+def getTkImg(img_name):
+    """Get tk image with the name of the image.
+    Args:
+        img_name (str): Name of the image.
+    Returns:
+        tk image object
+    """
+    in_dict = cgetImg(img_name)
+    b64_str = in_dict["b64str"]
+    img_ndarray = b64_to_ndarray(b64_str)
+    tk_img = ndarray2img(img_ndarray)
+    return tk_img
 
 
 def selectImg():
@@ -138,6 +153,7 @@ def cpostImg(in_dict):
         messagebox.showinfo(message=msg, title="upload", icon="error")
     return
 
+
 def cgetNames():
     """Get request from client site to get a list of image names.
 
@@ -148,6 +164,7 @@ def cgetNames():
     ans = json.loads(r.text)
     ans = tuple(ans)
     return ans
+
 
 def cgetImg(img_name):
     """Get request from client site to get the information of an image.
@@ -171,8 +188,25 @@ def b64_to_ndarray(b64_str):
     """
     img_bytes = base64.b64decode(b64_str)
     img_buf = io.BytesIO(img_bytes)
-    ndarray = mpimg.imread(img_buf, format='JPG')
-    return ndarray
+    img_ndarray = mpimg.imread(img_buf, format='JPG')
+    return img_ndarray
+
+
+def ndarray2img(img_ndarray):
+    """Convert ndarray to tk image.
+
+    Args:
+        img_ndarray: An ndarray containing image data.
+    Returns:
+        tk_image object
+    """
+    f = io.BytesIO()
+    imsave(f, img_ndarray, plugin='pil')
+    out_img = io.BytesIO()
+    out_img.write(f.getvalue())
+    img_obj = Image.open(out_img)
+    tk_image = ImageTk.PhotoImage(img_obj)
+    return tk_image
 
 
 if __name__ == "__main__":
