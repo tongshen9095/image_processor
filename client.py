@@ -242,8 +242,16 @@ def imgResize(img_size, dw):
     Returns:
         tuple: Adjusted image size.
     """
-    x, y = float(img_size[0])
-
+    img_size = img_size.split("x")
+    x, y = img_size
+    x, y = int(x), int(y)
+    if x > y:
+        x = dw
+        y = y * dw // x
+    else:
+        y = dw
+        x = x * dw // y
+    return (x, y)
 
 if __name__ == "__main__":
     mainWindow()
