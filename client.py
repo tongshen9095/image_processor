@@ -34,7 +34,7 @@ def mainWindow():
         # put a blank image
         img_obj = Image.open("./images/blank.png")
         tk_img = ImageTk.PhotoImage(img_obj)
-        img_label = ttklabel(window, i,age=tk_image)
+        img_label = ttk.Label(window, image=tk_img)
         img_label.image = tk_img
         img_label.grid(column=0, row=1, columnspan=2)
         return
@@ -46,6 +46,7 @@ def mainWindow():
     # Add a main display buttun
     main_display_btn = ttk.Button(root, text="Display",
                                   command=popDisplayWindow)
+    main_display_btn.grid(column=1, row=0)
 
 
 
