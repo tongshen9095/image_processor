@@ -14,9 +14,26 @@ server_name = "http://127.0.0.1:5000"
 def mainWindow():
     root = Tk()
 
-    # Add upload button
+    # Add a upload button
     upload_btn = ttk.Button(root, text="Upload", command=uploadBtnCmd)
     upload_btn.grid(column=0, row=0)
+
+    # Add a main display buttun
+    main_display_btn = ttk.Button(root, text="Display",
+                                  command=popDisplayWindow)
+    def popDisplayWindow():
+        window = Toplevel(root)
+
+        # Add a select label
+        select_label = ttk.Label(window, text="Select an image")
+        select_label.grid(column=0, row=0)
+
+        # Add a choice box
+        img_choice = StringVar()
+        img_choice_box = ttk.Combobox(window, textvariable=img_choice)
+        img_choice_box.grid(column=1, row=0)
+
+        # put a blank image
 
     root.mainloop()
     return
