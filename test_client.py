@@ -84,12 +84,13 @@ def test_makeDict(fname, b64_str, img_size, expt):
     assert in_dict == expt
 
 
-@pytest.mark.parametrize("b64_str, expt", [
-    (b64_str1, img_ndarray1),
-    (b64_str2, img_ndarray2),
-    (b64_str2, img_ndarray3)
+@pytest.mark.parametrize("fpath, expt", [
+    (fpath1, img_ndarray1),
+    (fpath2, img_ndarray2),
+    (fpath3, img_ndarray3)
 ])
-def test_b64_to_ndarray(b64_str, expt):
-    from client import b64_to_ndarray
+def test_b64_to_ndarray(fpath, expt):
+    from client import b64_to_ndarray, img2b64
+    b64_str = img2b64(fpath)
     ans = b64_to_ndarray(b64_str)
     assert (ans[0][0:5] == expt).all
