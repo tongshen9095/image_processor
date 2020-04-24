@@ -42,7 +42,7 @@ def mainWindow():
 
         # Put a blank image
         img_obj = Image.open("./images/blank.png").resize((dw, dw))
-        tk_img = ImageTk.PhotoImage(img_obj, dw)
+        tk_img = ImageTk.PhotoImage(img_obj)
         img_label = ttk.Label(window, image=tk_img)
         img_label.image = tk_img
         img_label.grid(column=0, row=1, columnspan=2)
@@ -50,7 +50,7 @@ def mainWindow():
         # Add a display button
         def displayBtnCmd():
             img_name = img_choice.get()
-            tk_img = getTkImg(img_name)
+            tk_img = getTkImg(img_name, dw)
             img_label.image = tk_img
             img_label.configure(image=tk_img)
             return
