@@ -84,7 +84,11 @@ def test_makeDict(fname, b64_str, img_size, expt):
     assert in_dict == expt
 
 
-@pytest.mark.parametrize
+@pytest.mark.parametrize("b64_str, expt", [
+    (b64_str1, img_ndarray1),
+    (b64_str2, img_ndarray2),
+    (b64_str2, img_ndarray3)
+])
 def test_b64_to_ndarray(b64_str, expt):
     from client import b64_to_ndarray
     ans = b64_to_ndarray(b64_str)
