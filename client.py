@@ -147,7 +147,18 @@ def cgetNames():
     ans = tuple(ans)
     return ans
 
+def cgetImg(img_name):
+    """Get request from client site to get the information of an image.
+
+    Args:
+        img_name (str): Name of an image.
+    Returns:
+        dict: An dictionary of image information.
+    """
+    r = requests.get(server_name + "/api/img/{}".format(img_name))
+    return json.loads(r.text)
+
 
 if __name__ == "__main__":
-    ans = cgetNames()
+    ans = cgetImg("acl1.jpg")
     print(ans, type(ans))
