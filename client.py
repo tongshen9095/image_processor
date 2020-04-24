@@ -33,7 +33,7 @@ def mainWindow():
         img_choice_box.grid(column=1, row=0)
         img_choice_box["values"] = cgetNames()
 
-        # put a blank image
+        # Put a blank image
         dw = 500
         img_obj = Image.open("./images/blank.png").resize((dw, dw))
         tk_img = ImageTk.PhotoImage(img_obj)
@@ -41,6 +41,10 @@ def mainWindow():
         img_label.image = tk_img
         img_label.grid(column=0, row=1, columnspan=2)
         return
+
+        # Add a display button
+        display_btn = ttk.Button(window, text="display", command=displayBtnCmd)
+        display_btn.grid(column=0, row=2, columnspan=2)
 
     # Add a upload button
     upload_btn = ttk.Button(root, text="Upload", command=uploadBtnCmd)
