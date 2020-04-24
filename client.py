@@ -68,7 +68,7 @@ def mainWindow():
             line2 = "image size: {} pixels".format(in_dict["imgsize"])
             text_box.insert(END, line1+"\n"+line2)
             return
-        info_btn = ttk.Button(window, text="Display", command=infoBtnCmd)
+        info_btn = ttk.Button(window, text="Info", command=infoBtnCmd)
         xp, yp = 60, 95
         info_btn.place(x=dw*xp//100, y=dh*yp//100)
 
@@ -86,7 +86,7 @@ def mainWindow():
             img_name = img_choice.get()
             if not img_name:
                 msg = "Please select an image first."
-                messagebox.showinfo(message=msg, title="Info", icon="error")
+                messagebox.showinfo(message=msg, title="Display", icon="error")
                 return
             in_dict = cgetImg(img_name)
             x, y = imgResize(in_dict["imgsize"], dw)
