@@ -32,12 +32,14 @@ def mainWindow():
 
         # Add a select label
         select_label = ttk.Label(window, text="Select an image")
-        select_label.grid(column=0, row=0)
+        xp, yp = 15, 2
+        select_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a choice box
         img_choice = StringVar()
         img_choice_box = ttk.Combobox(window, textvariable=img_choice)
-        img_choice_box.grid(column=1, row=0)
+        xp, yp = 55, 2
+        img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
         img_choice_box["values"] = cgetNames()
 
         # Put a blank image
@@ -45,18 +47,29 @@ def mainWindow():
         tk_img = ImageTk.PhotoImage(img_obj)
         img_label = ttk.Label(window, image=tk_img)
         img_label.image = tk_img
-        img_label.grid(column=0, row=1, columnspan=2)
+        xp, yp = 0, 8
+        img_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a display button
         def displayBtnCmd():
-            img_name = img_choice.get()
-            tk_img = getTkImg(img_name, dw)
+            img_obj = Image.open("./images/blank.png").resize((dw, dw))
+            tk_img = ImageTk.PhotoImage(img_obj)
+            img_label = ttk.Label(window, image=tk_img)
             img_label.image = tk_img
-            img_label.configure(image=tk_img)
+            xp, yp = 0, 8
+            img_label.place(x=dw*xp//100, y=dh*yp//100)
+
+            img_name = img_choice.get()
+            tk_img, img_size_adjust = getTkImg(img_name, dw)
+
+            img_label = ttk.Label(window, image=tk_img)
+            img_label.image = tk_img
+            new_x, new_y = img_size_adjust
+            img_label.place(x=(dw-new_x)//2, y=(dw-new_y)//2+dh*yp//100)
             return
         
         display_btn = ttk.Button(window, text="display", command=displayBtnCmd)
-        display_btn.place(x=dw*45//100, y=dh*9//10)
+        display_btn.place(x=dw*40//100, y=dh*95//100)
         return
     
     main_display_btn = ttk.Button(root, text="Display",
@@ -91,7 +104,7 @@ def getTkImg(img_name, dw):
     img_size_adjust = imgResize(img_size, dw)
     img_ndarray = b64_to_ndarray(b64_str)
     tk_img = ndarray2img(img_ndarray, img_size_adjust)
-    return tk_img
+    return tk_img, img_size_adjust
 
 
 def selectImg():
