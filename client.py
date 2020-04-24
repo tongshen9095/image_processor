@@ -52,20 +52,22 @@ def mainWindow():
 
         # Add a display button
         def displayBtnCmd():
+            # Put a blank image
             img_obj = Image.open("./images/blank.png").resize((dw, dw))
             tk_img = ImageTk.PhotoImage(img_obj)
             img_label = ttk.Label(window, image=tk_img)
             img_label.image = tk_img
             xp, yp = 0, 8
             img_label.place(x=dw*xp//100, y=dh*yp//100)
-
+            
+            # Put medical image on top of the blank image
             img_name = img_choice.get()
-            tk_img, img_size_adjust = getTkImg(img_name, dw)
-
+            in_dict = cgetImg(img_name)
+            x, y = imgResize(in_dict["imgsize"], dw)
+            tk_img = getTkImg(in_dict["b64str"], x, y)
             img_label = ttk.Label(window, image=tk_img)
             img_label.image = tk_img
-            new_x, new_y = img_size_adjust
-            img_label.place(x=(dw-new_x)//2, y=(dw-new_y)//2+dh*yp//100)
+            img_label.place(x=(dw-x)//2, y=(dw-y)//2+dh*yp//100)
             return
         
         display_btn = ttk.Button(window, text="display", command=displayBtnCmd)
@@ -91,20 +93,16 @@ def uploadBtnCmd():
     return
 
 
-def getTkImg(img_name, dw):
+def getTkImg(b64_str, x, y):
     """Get tk image with the name of the image.
     Args:
-        img_name (str): Name of the image.
+        b64 (str): Base64 representation of the image.
     Returns:
         tk image object
     """
-    in_dict = cgetImg(img_name)
-    b64_str = in_dict["b64str"]
-    img_size = in_dict["imgsize"]
-    img_size_adjust = imgResize(img_size, dw)
     img_ndarray = b64_to_ndarray(b64_str)
-    tk_img = ndarray2img(img_ndarray, img_size_adjust)
-    return tk_img, img_size_adjust
+    tk_img = ndarray2img(img_ndarray, x, y)
+    return tk_img
 
 
 def selectImg():
@@ -230,11 +228,13 @@ def b64_to_ndarray(b64_str):
     return img_ndarray
 
 
-def ndarray2img(img_ndarray, img_size_adjust):
+def ndarray2img(img_ndarray, x, y):
     """Convert ndarray to tk image.
 
     Args:
         img_ndarray: An ndarray containing image data.
+        x: width of the new size
+        y: height of the new size
     Returns:
         tk_image object
     """
@@ -242,9 +242,10 @@ def ndarray2img(img_ndarray, img_size_adjust):
     imsave(f, img_ndarray, plugin='pil')
     out_img = io.BytesIO()
     out_img.write(f.getvalue())
-    img_obj = Image.open(out_img).resize(img_size_adjust)
+    img_obj = Image.open(out_img).resize((x, y))
     tk_image = ImageTk.PhotoImage(img_obj)
     return tk_image
+
 
 def imgResize(img_size, dw):
     """Resize the image based on the default window width.
@@ -264,7 +265,7 @@ def imgResize(img_size, dw):
     else:
         new_y = min(y, dw)
         new_x = x * new_y // y
-    return (new_x, new_y)
+    return new_x, new_y
 
 if __name__ == "__main__":
     mainWindow()
