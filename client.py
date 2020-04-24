@@ -246,12 +246,12 @@ def imgResize(img_size, dw):
     x, y = img_size
     x, y = int(x), int(y)
     if x > y:
-        x = dw
-        y = y * dw // x
+        new_x = min(x, dw)
+        new_y = y * new_x // x
     else:
-        y = dw
-        x = x * dw // y
-    return (x, y)
+        new_y = min(y, dw)
+        new_x = x * new_y // y
+    return (new_x, new_y)
 
 if __name__ == "__main__":
     mainWindow()
