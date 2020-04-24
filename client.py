@@ -61,7 +61,7 @@ def mainWindow():
             img_name = img_choice.get()
             if not img_name:
                 msg = "Please select an image first."
-                messagebox.showinfo(message=msg, title="Info", icon="error")
+                messagebox.showinfo(message=msg, icon="error")
                 return
             in_dict = cgetImg(img_name)
             line1 = "timestamp: {}".format(in_dict["timestamp"])
@@ -87,7 +87,7 @@ def mainWindow():
             img_name = img_choice.get()
             if not img_name:
                 msg = "Please select an image first."
-                messagebox.showinfo(message=msg, title="Display", icon="error")
+                messagebox.showinfo(message=msg, icon="error")
                 return
             in_dict = cgetImg(img_name)
             x, y = imgResize(in_dict["imgsize"], dw)
@@ -112,7 +112,11 @@ def mainWindow():
 
 def uploadBtnCmd():
     """Command for upload botton."""
-    fpath = selectImg()
+    fpath = filedialog.askopenfilename()
+    if not fpath:
+        msg = "Please select an image first."
+        messagebox.showinfo(message=msg, icon="error")
+        return
     fname = parseName(fpath)
     b64_str = img2b64(fpath)
     img_size = getImgSize(fpath)
@@ -131,16 +135,6 @@ def getTkImg(b64_str, x, y):
     img_ndarray = b64_to_ndarray(b64_str)
     tk_img = ndarray2img(img_ndarray, x, y)
     return tk_img
-
-
-def selectImg():
-    """Select an image from file browser.
-
-    Returns:
-        str: File path of the selected image.
-    """
-    fpath = filedialog.askopenfilename()
-    return fpath
 
 
 def parseName(fpath):
