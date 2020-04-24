@@ -56,7 +56,7 @@ def mainWindow():
             return
         
         display_btn = ttk.Button(window, text="display", command=displayBtnCmd)
-        display_btn.place(x=dw*100//45, y=dh*10//9)
+        display_btn.place(x=dw*45//100, y=dh*9//10)
         return
     
     main_display_btn = ttk.Button(root, text="Display",
