@@ -14,9 +14,9 @@ b64_str1 = "/9j/4AAQSkZJRgABAgAA"
 b64_str2 = "/9j/4AAQSkZJRgABAgAA"
 b64_str3 = "/9j/4AAQSkZJRgABAgAA"
 
-img_size1 = "512 x 512"
-img_size2 = "1024 x 1245"
-img_size3 = "228 x 369"
+img_size1 = "512x512"
+img_size2 = "1024x1245"
+img_size3 = "228x369"
 
 expt_dict1 = {"name": fname1, "b64str": b64_str1, "imgsize": img_size1}
 expt_dict2 = {"name": fname2, "b64str": b64_str2, "imgsize": img_size2}
