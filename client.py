@@ -37,7 +37,7 @@ def mainWindow():
         img_label = ttklabel(window, i,age=tk_image)
         img_label.image = tk_img
         img_label.grid(column=0, row=1, columnspan=2)
-    return
+        return
 
     # Add a upload button
     upload_btn = ttk.Button(root, text="Upload", command=uploadBtnCmd)
