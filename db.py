@@ -67,6 +67,12 @@ def getImg(img_name):
     Returns:
         dict: An dictionary of the image info.
     """
-    
-
+    img = Image.objects.raw({"_id": img_name}).first()
+    in_dict = {}
+    in_dict["name"] = img.name
+    in_dict["b64str"] = img.b64str
+    in_dict["imgsize"] = img.imgsize
+    in_dict["processed"] = img.processed
+    in_dict["timestamp"] = img.timestamp
+    return in_dict
 
