@@ -25,7 +25,7 @@ def mainWindow():
     # Add a main display buttun
     def popDisplayWindow():
         dw = 500
-        dh = 600
+        dh = 800
         windowsize = str(dw) + "x" + str(dh)
         window = Toplevel(root)
         window.geometry(windowsize)
@@ -49,6 +49,12 @@ def mainWindow():
         img_label.image = tk_img
         xp, yp = 0, 8
         img_label.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a text box
+        h, w = 4, 100
+        text_box = Text(window, height=h, width=w)
+        yp = 80
+        text_box.place(x=(dw-w)//2, y=dh*yp//100)
 
         # Add a display button
         def displayBtnCmd():
