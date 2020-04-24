@@ -7,10 +7,11 @@ import base64
 import requests
 from PIL import Image
 import datetime
+import json
 
 server_name = "http://127.0.0.1:5000"
 
-
+"""
 def mainWindow():
     root = Tk()
 
@@ -32,11 +33,12 @@ def mainWindow():
         img_choice = StringVar()
         img_choice_box = ttk.Combobox(window, textvariable=img_choice)
         img_choice_box.grid(column=1, row=0)
+        choice_box["values"] = cgetNames()
 
         # put a blank image
-
     root.mainloop()
     return
+"""
 
 
 def uploadBtnCmd():
@@ -133,6 +135,15 @@ def cpostImg(in_dict):
         msg = "Error: {} - {}".format(r.status_code, r.text)
         messagebox.showinfo(message=msg, title="upload", icon="error")
     return
+
+def cgetNames():
+    """Get request from client site to get a list of image names.
+
+    Returns:
+        list: A list of image names.
+    """
+    r = requests.get(server_name + "/api/all_imgs")
+    return json.loads(r.text)
 
 
 if __name__ == "__main__":
