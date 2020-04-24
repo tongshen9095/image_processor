@@ -25,7 +25,7 @@ def mainWindow():
     # Add a main display buttun
     def popDisplayWindow():
         dw = 500
-        dh = 600
+        dh = 750
         windowsize = str(dw) + "x" + str(dh)
         window = Toplevel(root)
         window.geometry(windowsize)
@@ -50,6 +50,29 @@ def mainWindow():
         xp, yp = 0, 8
         img_label.place(x=dw*xp//100, y=dh*yp//100)
 
+        # Add a text box
+        h, w = 4, 300
+        text_box = Text(window, height=h, width=w)
+        yp = 85
+        text_box.place(x=(dw-w)//2, y=dh*yp//100)
+
+        # Add an Info button
+        def infoBtnCmd():
+            img_name = img_choice.get()
+            if not img_name:
+                msg = "Please select an image first."
+                messagebox.showinfo(message=msg, title="Info", icon="error")
+                return
+            in_dict = cgetImg(img_name)
+            line1 = "timestamp: {}".format(in_dict["timestamp"])
+            line2 = "image size: {} pixels".format(in_dict["imgsize"])
+            text_box.delete("1.0", "end")
+            text_box.insert(END, line1+"\n"+line2)
+            return
+        info_btn = ttk.Button(window, text="Info", command=infoBtnCmd)
+        xp, yp = 60, 95
+        info_btn.place(x=dw*xp//100, y=dh*yp//100)
+
         # Add a display button
         def displayBtnCmd():
             # Put a blank image
@@ -62,6 +85,10 @@ def mainWindow():
 
             # Put medical image on top of the blank image
             img_name = img_choice.get()
+            if not img_name:
+                msg = "Please select an image first."
+                messagebox.showinfo(message=msg, title="Display", icon="error")
+                return
             in_dict = cgetImg(img_name)
             x, y = imgResize(in_dict["imgsize"], dw)
             tk_img = getTkImg(in_dict["b64str"], x, y)
@@ -70,8 +97,9 @@ def mainWindow():
             img_label.place(x=(dw-x)//2, y=(dw-y)//2+dh*yp//100)
             return
 
-        display_btn = ttk.Button(window, text="display", command=displayBtnCmd)
-        display_btn.place(x=dw*40//100, y=dh*95//100)
+        display_btn = ttk.Button(window, text="Display", command=displayBtnCmd)
+        xp, yp = 20, 95
+        display_btn.place(x=dw*xp//100, y=dh*yp//100)
         return
 
     main_display_btn = ttk.Button(root, text="Display",
