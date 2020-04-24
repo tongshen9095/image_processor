@@ -147,4 +147,5 @@ def cgetNames():
 
 
 if __name__ == "__main__":
-    mainWindow()
+    ans = cgetNames()
+    print(ans, type(ans))

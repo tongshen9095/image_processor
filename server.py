@@ -28,6 +28,17 @@ def postImg():
     return "image added", 200
 
 
+@app.route("/api/all_imgs", method=["GET"])
+def getNames():
+    """Get the list of image names.
+
+    Returns:
+        list: A list of image names.
+    """
+    ans = db.getNames()
+    return ans
+
+
 def verifyInfo(in_dict, sample_dict):
     """Verify whether the input dictionary is valid.
     An input dictionary is valid when 1) all the keys in the sample dictionary
