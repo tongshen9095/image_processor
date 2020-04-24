@@ -66,6 +66,7 @@ def mainWindow():
             in_dict = cgetImg(img_name)
             line1 = "timestamp: {}".format(in_dict["timestamp"])
             line2 = "image size: {} pixels".format(in_dict["imgsize"])
+            text_box.delete("1.0", "end")
             text_box.insert(END, line1+"\n"+line2)
             return
         info_btn = ttk.Button(window, text="Info", command=infoBtnCmd)
