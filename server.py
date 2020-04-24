@@ -17,6 +17,7 @@ def postImg():
     sample_dict = {"name": str,
                    "b64str": str,
                    "imgsize": str,
+                   "processed": bool,
                    "timestamp": str}
     in_dict = request.get_json()
     isValid, msg = verifyInfo(in_dict, sample_dict)
