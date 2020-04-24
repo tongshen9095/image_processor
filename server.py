@@ -36,7 +36,7 @@ def getNames():
         list: A list of image names.
     """
     ans = db.getNames()
-    return ans
+    return jsonify(ans)
 
 
 def verifyInfo(in_dict, sample_dict):
