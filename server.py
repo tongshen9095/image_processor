@@ -28,7 +28,7 @@ def postImg():
     return "image added", 200
 
 
-@app.route("/api/all_imgs", method=["GET"])
+@app.route("/api/all_imgs", methods=["GET"])
 def getNames():
     """Get the list of image names.
 
