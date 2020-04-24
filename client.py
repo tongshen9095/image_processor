@@ -25,7 +25,7 @@ def mainWindow():
     # Add a main display buttun
     def popDisplayWindow():
         dw = 500
-        dh = 800
+        dh = 750
         windowsize = str(dw) + "x" + str(dh)
         window = Toplevel(root)
         window.geometry(windowsize)
@@ -51,9 +51,9 @@ def mainWindow():
         img_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a text box
-        h, w = 4, 100
+        h, w = 4, 300
         text_box = Text(window, height=h, width=w)
-        yp = 80
+        yp = 85
         text_box.place(x=(dw-w)//2, y=dh*yp//100)
 
         # Add an Info button
@@ -64,7 +64,7 @@ def mainWindow():
             line2 = "image size: {} pixels".format(in_dict["imgsize"])
             text_box.insert(END, line1+"\n"+line2)
         info_btn = ttk.Button(window, text="Info", command=infoBtnCmd)
-        xp, yp = 55, 95
+        xp, yp = 60, 95
         info_btn.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a display button
@@ -88,7 +88,7 @@ def mainWindow():
             return
 
         display_btn = ttk.Button(window, text="Display", command=displayBtnCmd)
-        xp, yp = 15, 95
+        xp, yp = 20, 95
         display_btn.place(x=dw*xp//100, y=dh*yp//100)
         return
 
