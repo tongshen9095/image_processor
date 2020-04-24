@@ -143,7 +143,9 @@ def cgetNames():
         list: A list of image names.
     """
     r = requests.get(server_name + "/api/all_imgs")
-    return json.loads(r.text)
+    ans = json.loads(r.text)
+    ans = tuple(ans)
+    return ans
 
 
 if __name__ == "__main__":
