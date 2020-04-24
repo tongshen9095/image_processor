@@ -5,7 +5,7 @@ class Image(MongoModel):
     name = fields.CharField(primary_key=True)
     b64str = fields.CharField()
     imgsize = fields.CharField()
-    processed = BooleanField()
+    processed = fields.BooleanField()
     timestamp = fields.CharField()
 
 
