@@ -64,5 +64,6 @@ def test_getImgSize(fpath, expt):
 def test_makeDict(fname, b64_str, img_size, expt):
     from client import makeDict
     in_dict = makeDict(fname, b64_str, img_size)
+    expt["processed"] = False
     expt["timestamp"] = in_dict["timestamp"]
     assert in_dict == expt
