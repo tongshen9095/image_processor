@@ -59,7 +59,7 @@ def mainWindow():
             img_label.image = tk_img
             xp, yp = 0, 8
             img_label.place(x=dw*xp//100, y=dh*yp//100)
-            
+
             # Put medical image on top of the blank image
             img_name = img_choice.get()
             in_dict = cgetImg(img_name)
@@ -69,11 +69,11 @@ def mainWindow():
             img_label.image = tk_img
             img_label.place(x=(dw-x)//2, y=(dw-y)//2+dh*yp//100)
             return
-        
+
         display_btn = ttk.Button(window, text="display", command=displayBtnCmd)
         display_btn.place(x=dw*40//100, y=dh*95//100)
         return
-    
+
     main_display_btn = ttk.Button(root, text="Display",
                                   command=popDisplayWindow)
     main_display_btn.grid(column=1, row=0)
@@ -249,7 +249,7 @@ def ndarray2img(img_ndarray, x, y):
 
 def imgResize(img_size, dw):
     """Resize the image based on the default window width.
-    
+
     Args:
         img_size (str): Original image size.
         dw (int): Default window width.

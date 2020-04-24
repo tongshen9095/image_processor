@@ -77,4 +77,3 @@ def getImg(img_name):
     in_dict["processed"] = img.processed
     in_dict["timestamp"] = img.timestamp
     return in_dict
-

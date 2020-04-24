@@ -42,6 +42,7 @@ img_size_adjust1 = (500, 500)
 img_size_adjust2 = (411, 500)
 img_size_adjust3 = (228, 369)
 
+
 @pytest.mark.parametrize("fpath, expt", [
     (fpath1, "acl1.jpg"),
     (fpath2, "esophagus2.jpg"),
