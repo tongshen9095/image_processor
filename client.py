@@ -8,6 +8,8 @@ import requests
 from PIL import Image
 import datetime
 import json
+import io
+import matplotlib.image as mpimg
 
 server_name = "http://127.0.0.1:5000"
 
@@ -157,6 +159,20 @@ def cgetImg(img_name):
     """
     r = requests.get(server_name + "/api/img/{}".format(img_name))
     return json.loads(r.text)
+
+
+def b64_to_ndarray(b64_str):
+    """Convert base64 string to ndarray.
+
+    Args:
+        b64_str (str): base64 string.
+    Returns:
+        ndarray: An ndarray containing image data.
+    """
+    img_bytes = base64.b64decode(b64_str)
+    img_buf = io.BytesIO(img_bytes)
+    img_ndarray = mpimg.imread(img_buf, format='JPG')
+    return img_ndarray
 
 
 if __name__ == "__main__":
