@@ -97,6 +97,7 @@ def makeDict(fname, b64_str, img_size):
     in_dict = {"name": fname,
                "b64str": b64_str,
                "imgsize": img_size,
+               "processed": False,
                "timestamp": curr_time_str}
     return in_dict
 

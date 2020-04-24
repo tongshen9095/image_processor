@@ -5,6 +5,7 @@ class Image(MongoModel):
     name = fields.CharField(primary_key=True)
     b64str = fields.CharField()
     imgsize = fields.CharField()
+    processed = fields.BooleanField()
     timestamp = fields.CharField()
 
 
@@ -12,7 +13,7 @@ def initDb():
     """Connect to database."""
     print("Connecting to database...")
     connect("mongodb+srv://db_access:9095@bme547-tla9o.mongodb.net/"
-            "img?retryWrites=true&w=majority")
+            "medicalimage?retryWrites=true&w=majority")
     print("Connected to database")
     return
 
@@ -26,6 +27,7 @@ def addImg(in_dict):
     img = Image(name=in_dict["name"],
                 b64str=in_dict["b64str"],
                 imgsize=in_dict["imgsize"],
+                processed=in_dict["processed"],
                 timestamp=in_dict["timestamp"])
     img.save()
     return
