@@ -25,8 +25,8 @@ def mainWindow():
     # Add a main display buttun
     def popDisplayWindow():
         dw = 500
-        ph = 100
-        windowsize = str(dw) + "x" + str(dw+ph)
+        dh = 600
+        windowsize = str(dw) + "x" + str(dh)
         window = Toplevel(root)
         window.geometry(windowsize)
 
@@ -56,7 +56,7 @@ def mainWindow():
             return
         
         display_btn = ttk.Button(window, text="display", command=displayBtnCmd)
-        display_btn.grid(column=0, row=2, columnspan=2)
+        display_btn.place(x=dw//2, y=int(dh * 0.9))
         return
     
     main_display_btn = ttk.Button(root, text="Display",
