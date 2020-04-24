@@ -56,6 +56,17 @@ def mainWindow():
         yp = 80
         text_box.place(x=(dw-w)//2, y=dh*yp//100)
 
+        # Add an Info button
+        def infoBtnCmd():
+            img_name = img_choice.get()
+            in_dict = cgetImg(img_name)
+            line1 = "timestamp: {}".format(in_dict["timestamp"])
+            line2 = "image size: {} pixels".format(in_dict["imgsize"])
+            text_box.insert(END, line1+"\n"+line2)
+        info_btn = ttk.Button(window, text="display", command=infoBtnCmd)
+        xp, yp = 55, 95
+        info_btn.place(x=dw*xp//100, y=dh*yp//100)
+
         # Add a display button
         def displayBtnCmd():
             # Put a blank image
@@ -77,7 +88,8 @@ def mainWindow():
             return
 
         display_btn = ttk.Button(window, text="display", command=displayBtnCmd)
-        display_btn.place(x=dw*40//100, y=dh*95//100)
+        xp, yp = 15, 95
+        display_btn.place(x=dw*xp//100, y=dh*yp//100)
         return
 
     main_display_btn = ttk.Button(root, text="Display",
