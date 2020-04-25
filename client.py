@@ -186,6 +186,11 @@ def mainWindow():
                                   command=popProcessWindow)
     main_process_btn.grid(column=3, row=0)
 
+    # Add a main compare button
+    compare_btn = ttk.Button(root, text="Compare",
+                             command=popCompareWindow)
+    compare_btn.grid(column=4, row=0)
+
     root.mainloop()
     return
 
