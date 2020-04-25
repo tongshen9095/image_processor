@@ -53,6 +53,10 @@ inv_b64_str1 = 'iVBORw0KGgoAAAANSUhE'
 inv_b64_str2 = 'iVBORw0KGgoAAAANSUhE'
 inv_b64_str3 = 'iVBORw0KGgoAAAANSUhE'
 
+b64_str4 = "iVBORw0KGgoAAAANSUhE"
+b64_str5 = "iVBORw0KGgoAAAANSUhE"
+b64_str6 = "iVBORw0KGgoAAAANSUhE"
+
 
 @pytest.mark.parametrize("fpath, expt", [
     (fpath1, b64_str1),
@@ -126,3 +130,16 @@ def test_invertImg(fpath, expt):
     inv_b64_str = invertImg(b64_str1)
     ans = inv_b64_str[:20]
     assert ans == expt
+
+
+@pytest.mark.parametrize("fpath, expt", [
+    (fpath1, b64_str4),
+    (fpath2, b64_str5),
+    (fpath3, b64_str6)
+])
+def test_ndarray2b64(fpath, expt):
+    from transimg import img2b64, b64_to_ndarray, ndarray2b64
+    b64_str = img2b64(fpath) 
+    img_ndarray = b64_to_ndarray(b64_str) 
+    ans = ndarray2b64(img_ndarray)
+    assert ans[:20] == expt 
