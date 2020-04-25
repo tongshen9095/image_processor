@@ -106,6 +106,31 @@ def mainWindow():
                                   command=popDisplayWindow)
     main_display_btn.grid(column=1, row=0)
 
+    # Add a main download button
+    def popDownloadWindow():
+        dw = 200
+        dh = 300
+        windowsize = str(dw) + "x" + str(dh)
+        window = Toplevel(root)
+        window.geometry(windowsize)
+
+        # Add a select label
+        select_label = ttk.Label(window, text="Select an image")
+        xp, yp = 15, 2
+        select_label.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a choice box
+        img_choice = StringVar()
+        img_choice_box = ttk.Combobox(window, textvariable=img_choice)
+        xp, yp = 55, 2
+        img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
+        img_choice_box["values"] = cgetNames()
+        return
+
+    main_download_btn = ttk.Button(root, text="Download",
+                                  command=popDownloadWindow)
+    main_download_btn.grid(column=2, row=0)
+
     root.mainloop()
     return
 
