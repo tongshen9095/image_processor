@@ -187,6 +187,34 @@ def mainWindow():
     main_process_btn.grid(column=3, row=0)
 
     # Add a main compare button
+    def popCompareWindow():
+        dw = 1100
+        dh = 750
+        windowsize = str(dw) + "x" + str(dh)
+        window = Toplevel(root)
+        window.geometry(windowsize)
+
+        # Add a select an original image label
+        original_label = ttk.Label(window, text="Select an original image")
+        xp, yp = 5, 2
+        original_label.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a select a processed image label
+        processed_label = ttk.Label(window, text="Select an processed image")
+        xp, yp = 55, 2
+        processed_label.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a choice box for original images
+        original_choice = StringVar()
+        original_choice_box = ttk.Combobox(window, textvariable=original_choice)
+        status, img_names = cgetSelectedNames(False)
+        if status:
+            original_choice_box["values"] = img_names
+        xp, yp = 55, 2
+        original_choice_box.place(x=dw*xp//100, y=dh*yp//100)
+
+
+
     compare_btn = ttk.Button(root, text="Compare",
                              command=popCompareWindow)
     compare_btn.grid(column=4, row=0)
@@ -335,6 +363,17 @@ def cprocessImg(img_name):
         messagebox.showinfo(message=msg, icon="error")
         return False
     return True
+
+
+def cgetSelectedNames(processed):
+    r = requests.get(server_name + "/api/all_imgs" + processed)
+    if r.status_code != 200:
+        msg = "Error: {} - {}".format(r.status_code, "unknown error")
+        messagebox.showinfo(message=msg, icon="error")
+        return False, []
+    ans = json.loads(r.text)
+    ans = tuple(ans)
+    return True, ans
 
 
 def imgResize(img_size, dw):
