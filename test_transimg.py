@@ -139,7 +139,7 @@ def test_invertImg(fpath, expt):
 ])
 def test_ndarray2b64(fpath, expt):
     from transimg import img2b64, b64_to_ndarray, ndarray2b64
-    b64_str = img2b64(fpath) 
-    img_ndarray = b64_to_ndarray(b64_str) 
+    b64_str = img2b64(fpath)
+    img_ndarray = b64_to_ndarray(b64_str)
     ans = ndarray2b64(img_ndarray)
-    assert ans[:20] == expt 
+    assert ans[:20] == expt
