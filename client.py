@@ -38,7 +38,9 @@ def mainWindow():
         img_choice_box = ttk.Combobox(window, textvariable=img_choice)
         xp, yp = 55, 2
         img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
-        img_choice_box["values"] = cgetNames()
+        status, img_names = cgetNames()
+        if status:
+            img_choice_box["values"] = img_names
 
         # Put a blank image
         img_obj = Image.open("./images/blank.png").resize((dw, dw))
@@ -122,7 +124,9 @@ def mainWindow():
         img_choice_box = ttk.Combobox(window, textvariable=img_choice)
         xp, yp = 55, 2
         img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
-        img_choice_box["values"] = cgetNames()
+        status, img_names = cgetNames()
+        if status:
+            img_choice_box["values"] = img_names
 
         # Add a download button
         def downloadBtnCmd():
@@ -169,7 +173,9 @@ def mainWindow():
         img_choice_box = ttk.Combobox(window, textvariable=img_choice)
         xp, yp = 55, 2
         img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
-        img_choice_box["values"] = cgetNames()
+        status, img_names = cgetNames()
+        if status:
+            img_choice_box["values"] = img_names
 
         # Add a process button
         def processBtnCmd():
@@ -246,16 +252,18 @@ def cgetNames():
     """Get request from client site to get a list of image names.
 
     Returns:
-        list: A list of image names.
+        (tuple): tuple containing:
+            bool: True if the requests succeed else False.
+            list: A list of image names.
     """
     r = requests.get(server_name + "/api/all_imgs")
     if r.status_code!= 200:
         msg = "Error: {} - {}".format(r.status_code, "unknown error")
         messagebox.showinfo(message=msg, icon="error")
-        return
+        return False, []
     ans = json.loads(r.text)
     ans = tuple(ans)
-    return ans
+    return True, ans
 
 
 def cgetImg(img_name):
@@ -274,7 +282,7 @@ def cprocessImg(img_name):
     """Get request from client site to initialize image processing.
     
     Args:
-        img_name (str): Name of an image.
+        bool: True if the requests succeed else False.
     """
     r = requests.get(server_name + "/api/process_img/{}".format(img_name))
     if r.status_code != 200:
