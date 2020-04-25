@@ -16,7 +16,7 @@ server_name = "http://127.0.0.1:5000"
 def mainWindow():
     root = Tk()
 
-    # Add a upload button
+    # Add a main upload button
     upload_btn = ttk.Button(root, text="Upload", command=uploadBtnCmd)
     upload_btn.grid(column=0, row=0)
 
@@ -36,9 +36,11 @@ def mainWindow():
         # Add a choice box
         img_choice = StringVar()
         img_choice_box = ttk.Combobox(window, textvariable=img_choice)
+        status, img_names = cgetNames()
+        if status:
+            img_choice_box["values"] = img_names
         xp, yp = 55, 2
         img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
-        img_choice_box["values"] = cgetNames()
 
         # Put a blank image
         img_obj = Image.open("./images/blank.png").resize((dw, dw))
@@ -49,23 +51,20 @@ def mainWindow():
         img_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a text box
-        h, w = 4, 300
+        h, w = 6, 280
         text_box = Text(window, height=h, width=w)
-        yp = 85
+        yp = 82
         text_box.place(x=(dw-w)//2, y=dh*yp//100)
 
         # Add an Info button
         def infoBtnCmd():
             img_name = img_choice.get()
-            if not img_name:
-                msg = "Please select an image first."
-                messagebox.showinfo(message=msg, icon="error")
+            status, line1, line2 = infoHelper(img_name)
+            if not status:
                 return
-            in_dict = cgetImg(img_name)
-            line1 = "timestamp: {}".format(in_dict["timestamp"])
-            line2 = "image size: {} pixels".format(in_dict["imgsize"])
             text_box.delete("1.0", "end")
-            text_box.insert(END, line1+"\n"+line2)
+            content = "name: {}".format(img_name) + "\n" + line1 + "\n" + line2
+            text_box.insert(END, content)
             return
         info_btn = ttk.Button(window, text="Info", command=infoBtnCmd)
         xp, yp = 60, 95
@@ -81,13 +80,15 @@ def mainWindow():
             xp, yp = 0, 8
             img_label.place(x=dw*xp//100, y=dh*yp//100)
 
-            # Put medical image on top of the blank image
+            # Put a medical image on top of the blank image
             img_name = img_choice.get()
             if not img_name:
                 msg = "Please select an image first."
                 messagebox.showinfo(message=msg, icon="error")
                 return
-            in_dict = cgetImg(img_name)
+            status, in_dict = cgetImg(img_name)
+            if not status:
+                return
             x, y = imgResize(in_dict["imgsize"], dw)
             tk_img = getTkImg(in_dict["b64str"], x, y)
             img_label = ttk.Label(window, image=tk_img)
@@ -120,26 +121,16 @@ def mainWindow():
         # Add a choice box
         img_choice = StringVar()
         img_choice_box = ttk.Combobox(window, textvariable=img_choice)
+        status, img_names = cgetNames()
+        if status:
+            img_choice_box["values"] = img_names
         xp, yp = 55, 2
         img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
-        img_choice_box["values"] = cgetNames()
 
         # Add a download button
         def downloadBtnCmd():
             img_name = img_choice.get()
-            if not img_name:
-                msg = "Please select an image first."
-                messagebox.showinfo(message=msg, icon="error")
-                return
-            in_dict = cgetImg(img_name)
-            fpath = filedialog.asksaveasfilename()
-            if not fpath:
-                msg = "Please select an directory to save your image."
-                messagebox.showerror(message=msg, icon="error")
-                return
-            transimg.b64_to_img(in_dict["b64str"], fpath)
-            msg = "Success: Download the image."
-            messagebox.showinfo(message=msg)
+            downloadHelper(img_name)
             return
         download_btn = ttk.Button(window, text="Dowdload",
                                   command=downloadBtnCmd)
@@ -150,6 +141,50 @@ def mainWindow():
     main_download_btn = ttk.Button(root, text="Download",
                                    command=popDownloadWindow)
     main_download_btn.grid(column=2, row=0)
+
+    # Add a main process buttom
+    def popProcessWindow():
+        dw = 500
+        dh = 300
+        windowsize = str(dw) + "x" + str(dh)
+        window = Toplevel(root)
+        window.geometry(windowsize)
+
+        # Add a select label
+        select_label = ttk.Label(window, text="Select an image")
+        xp, yp = 15, 2
+        select_label.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a choice box
+        img_choice = StringVar()
+        img_choice_box = ttk.Combobox(window, textvariable=img_choice)
+        status, img_names = cgetNames()
+        if status:
+            img_choice_box["values"] = img_names
+        xp, yp = 55, 2
+        img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a process button
+        def processBtnCmd():
+            img_name = img_choice.get()
+            if not img_name:
+                msg = "Please select an image first."
+                messagebox.showinfo(message=msg, icon="error")
+                return
+            if not cprocessImg(img_name):
+                return
+            msg = "Success: Process the image."
+            messagebox.showinfo(message=msg)
+            return
+        process_btn = ttk.Button(window, text="Process",
+                                 command=processBtnCmd)
+        xp, yp = 40, 80
+        process_btn.place(x=dw*xp//100, y=dh*yp//100)
+        return
+
+    main_process_btn = ttk.Button(root, text="Process",
+                                  command=popProcessWindow)
+    main_process_btn.grid(column=3, row=0)
 
     root.mainloop()
     return
@@ -166,8 +201,55 @@ def uploadBtnCmd():
     fname = parseName(fpath)
     b64_str = transimg.img2b64(fpath)
     img_size = transimg.getImgSize(fpath)
-    in_dict = transimg.makeDict(fname, b64_str, img_size)
+    in_dict = transimg.makeDict(fname, b64_str, img_size, False)
     cpostImg(in_dict)
+    return
+
+
+def infoHelper(img_name):
+    """Help fill the function of info button.
+
+    Args:
+        img_name: Name of the selected image.
+    Returns:
+        (tuple): tuple containing:
+            bool: True if the requests succeed else False.
+            str: Image timestamp.
+            str: Image size.
+    """
+    if not img_name:
+        msg = "Please select an image first."
+        messagebox.showinfo(message=msg, icon="error")
+        return False, "", ""
+    status, in_dict = cgetImg(img_name)
+    if not status:
+        return False, "", ""
+    line1 = "timestamp: {}".format(in_dict["timestamp"])
+    line2 = "image size: {} pixels".format(in_dict["imgsize"])
+    return True, line1, line2
+
+
+def downloadHelper(img_name):
+    """Help fill the function of download button.
+
+    Args:
+        img_name: Name of the selected image.
+    """
+    if not img_name:
+        msg = "Please select an image first."
+        messagebox.showinfo(message=msg, icon="error")
+        return
+    status, in_dict = cgetImg(img_name)
+    if not status:
+        return
+    fpath = filedialog.asksaveasfilename()
+    if not fpath:
+        msg = "Please select an directory to save your image."
+        messagebox.showerror(message=msg, icon="error")
+        return
+    transimg.b64_to_img(in_dict["b64str"], fpath)
+    msg = "Success: Download the image."
+    messagebox.showinfo(message=msg)
     return
 
 
@@ -204,12 +286,18 @@ def cgetNames():
     """Get request from client site to get a list of image names.
 
     Returns:
-        list: A list of image names.
+        (tuple): tuple containing:
+            bool: True if the requests succeed else False.
+            list: A list of image names.
     """
     r = requests.get(server_name + "/api/all_imgs")
+    if r.status_code != 200:
+        msg = "Error: {} - {}".format(r.status_code, "unknown error")
+        messagebox.showinfo(message=msg, icon="error")
+        return False, []
     ans = json.loads(r.text)
     ans = tuple(ans)
-    return ans
+    return True, ans
 
 
 def cgetImg(img_name):
@@ -218,10 +306,30 @@ def cgetImg(img_name):
     Args:
         img_name (str): Name of an image.
     Returns:
-        dict: An dictionary of image information.
+        (tuple): tuple containing:
+            bool: True if the requests succeed else False.
+            dict: An dictionary of image information.
     """
     r = requests.get(server_name + "/api/img/{}".format(img_name))
-    return json.loads(r.text)
+    if r.status_code != 200:
+        msg = "Error: {} - {}".format(r.status_code, "unknown error")
+        messagebox.showinfo(message=msg, icon="error")
+        return False, {}
+    return True, json.loads(r.text)
+
+
+def cprocessImg(img_name):
+    """Get request from client site to initialize image processing.
+
+    Args:
+        bool: True if the requests succeed else False.
+    """
+    r = requests.get(server_name + "/api/process_img/{}".format(img_name))
+    if r.status_code != 200:
+        msg = "Error: {} - {}".format(r.status_code, "unknown error")
+        messagebox.showinfo(message=msg, icon="error")
+        return False
+    return True
 
 
 def imgResize(img_size, dw):

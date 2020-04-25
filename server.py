@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import logging
 import db
+import transimg
 
 app = Flask(__name__)
 
@@ -50,6 +51,22 @@ def getImg(img_name):
     """
     in_dict = db.getImg(img_name)
     return jsonify(in_dict)
+
+
+@app.route("/api/process_img/<img_name>", methods=["GET"])
+def processImg(img_name):
+    """Invert the image and add the image to database.
+
+    Args:
+        img_name (str): Name of the image.
+    """
+    in_dict = db.getImg(img_name)
+    inv_b64_str = transimg.invertImg(in_dict["b64str"])
+    fname = img_name.split(".")[0] + "_proecessed" + ".jpg"
+    inv_in_dict = transimg.makeDict(fname, inv_b64_str,
+                                    in_dict["imgsize"], True)
+    db.addImg(inv_in_dict)
+    return "Succeed: process the image", 200
 
 
 def verifyInfo(in_dict, sample_dict):

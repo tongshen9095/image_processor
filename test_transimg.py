@@ -20,9 +20,18 @@ img_size1 = "512x512"
 img_size2 = "1024x1245"
 img_size3 = "228x369"
 
-expt_dict1 = {"name": fname1, "b64str": b64_str1, "imgsize": img_size1}
-expt_dict2 = {"name": fname2, "b64str": b64_str2, "imgsize": img_size2}
-expt_dict3 = {"name": fname3, "b64str": b64_str3, "imgsize": img_size3}
+expt_dict1 = {"name": fname1,
+              "b64str": b64_str1,
+              "imgsize": img_size1,
+              "processed": False}
+expt_dict2 = {"name": fname2,
+              "b64str": b64_str2,
+              "imgsize": img_size2,
+              "processed": False}
+expt_dict3 = {"name": fname3,
+              "b64str": b64_str3,
+              "imgsize": img_size3,
+              "processed": True}
 
 img_ndarray1 = [[0, 0, 0],
                 [0, 0, 0],
@@ -39,6 +48,10 @@ img_ndarray3 = [[3, 3, 3],
                 [0, 0, 0],
                 [0, 0, 0],
                 [0, 0, 0]]
+
+inv_b64_str1 = 'iVBORw0KGgoAAAANSUhE'
+inv_b64_str2 = 'iVBORw0KGgoAAAANSUhE'
+inv_b64_str3 = 'iVBORw0KGgoAAAANSUhE'
 
 
 @pytest.mark.parametrize("fpath, expt", [
@@ -63,15 +76,14 @@ def test_getImgSize(fpath, expt):
     assert img_size == expt
 
 
-@pytest.mark.parametrize("fname, b64_str, img_size, expt", [
-    (fname1, b64_str1, img_size1, expt_dict1),
-    (fname2, b64_str2, img_size2, expt_dict2),
-    (fname3, b64_str3, img_size3, expt_dict3),
+@pytest.mark.parametrize("fname, b64_str, img_size, processed_status, expt", [
+    (fname1, b64_str1, img_size1, False, expt_dict1),
+    (fname2, b64_str2, img_size2, False, expt_dict2),
+    (fname3, b64_str3, img_size3, True, expt_dict3),
 ])
-def test_makeDict(fname, b64_str, img_size, expt):
+def test_makeDict(fname, b64_str, img_size, processed_status, expt):
     from transimg import makeDict
-    in_dict = makeDict(fname, b64_str, img_size)
-    expt["processed"] = False
+    in_dict = makeDict(fname, b64_str, img_size, processed_status)
     expt["timestamp"] = in_dict["timestamp"]
     assert in_dict == expt
 
@@ -101,3 +113,16 @@ def test_b64_to_img(fpath):
     ans = filecmp.cmp(fpath, out_fpath)
     os.remove(out_fpath)
     assert ans
+
+
+@pytest.mark.parametrize("fpath, expt", [
+    (fpath1, inv_b64_str1),
+    (fpath2, inv_b64_str2),
+    (fpath3, inv_b64_str3)
+])
+def test_invertImg(fpath, expt):
+    from transimg import img2b64, invertImg
+    b64_str1 = img2b64(fpath)
+    inv_b64_str = invertImg(b64_str1)
+    ans = inv_b64_str[:20]
+    assert ans == expt
