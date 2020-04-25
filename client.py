@@ -200,12 +200,12 @@ def mainWindow():
         window.geometry(windowsize)
 
         # Add a select an orginal image label
-        org_label = ttk.Label(window, text="Select an org image")
+        org_label = ttk.Label(window, text="Select an original image")
         xp, yp = 5, 2
         org_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a select a processed image label
-        pro_label = ttk.Label(window, text="Select an pro image")
+        pro_label = ttk.Label(window, text="Select an processed image")
         xp, yp = 55, 2
         pro_label.place(x=dw*xp//100, y=dh*yp//100)
 
@@ -217,11 +217,10 @@ def mainWindow():
             org_choice_box["values"] = img_names
         xp, yp = 25, 2
         org_choice_box.place(x=dw*xp//100, y=dh*yp//100)
-        
+
         # Add a choice box for processed images
         pro_choice = StringVar()
-        pro_choice_box = ttk.Combobox(window, 
-                                            textvariable=pro_choice)
+        pro_choice_box = ttk.Combobox(window, textvariable=pro_choice)
         status, img_names = cgetSelectedNames("1")
         if status:
             pro_choice_box["values"] = img_names
@@ -268,7 +267,7 @@ def mainWindow():
             content = "name: {}".format(org_name) + "\n" + line1 + "\n" + line2
             org_text_box.insert(END, content)
             return
-        org_info_btn = ttk.Button(window, text="Info", command= orgInfoBtnCmd)
+        org_info_btn = ttk.Button(window, text="Info", command=orgInfoBtnCmd)
         xp, yp = 30, 95
         org_info_btn.place(x=dw*xp//100, y=dh*yp//100)
 
@@ -313,7 +312,7 @@ def mainWindow():
             tk_img = getTkImg(in_dict["b64str"], x, y)
             img_label = ttk.Label(window, image=tk_img)
             img_label.image = tk_img
-            img_label.place(x=(dw0-x)//2, y=(dw-y)//2+dh*yp//100)
+            img_label.place(x=(dw0-x)//2, y=(dw0-y)//2+dh*yp//100)
             return
 
         org_display_btn = ttk.Button(window, text="Display",
@@ -328,8 +327,8 @@ def mainWindow():
             tk_img = ImageTk.PhotoImage(img_obj)
             img_label = ttk.Label(window, image=tk_img)
             img_label.image = tk_img
-            xp, yp = 600, 8
-            img_label.place(x=dw*xp//100, y=dh*yp//100)
+            yp = 8
+            img_label.place(x=600, y=dh*yp//100)
 
             # Put a medical image on top of the blank image
             pro_name = pro_choice.get()
@@ -344,7 +343,7 @@ def mainWindow():
             tk_img = getTkImg(in_dict["b64str"], x, y)
             img_label = ttk.Label(window, image=tk_img)
             img_label.image = tk_img
-            img_label.place(x=(dw0-x)//2+dw, y=(dw0-y)//2+dh*yp//100)
+            img_label.place(x=(dw0-x)//2+600, y=(dw0-y)//2+dh*yp//100)
             return
 
         pro_display_btn = ttk.Button(window, text="Display",

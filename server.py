@@ -72,7 +72,7 @@ def processImg(img_name):
 @app.route("/api/all_imgs/<processed>")
 def getSelectedNames(processed):
     """Get the list of names of selected images.
- 
+
     Args:
         processed (str): "1" processed image, "0" unprocessed image
     Returns:
