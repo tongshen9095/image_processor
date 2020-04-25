@@ -137,21 +137,7 @@ def mainWindow():
         # Add a download button
         def downloadBtnCmd():
             img_name = img_choice.get()
-            if not img_name:
-                msg = "Please select an image first."
-                messagebox.showinfo(message=msg, icon="error")
-                return
-            status, in_dict = cgetImg(img_name)
-            if not status:
-                return
-            fpath = filedialog.asksaveasfilename()
-            if not fpath:
-                msg = "Please select an directory to save your image."
-                messagebox.showerror(message=msg, icon="error")
-                return
-            transimg.b64_to_img(in_dict["b64str"], fpath)
-            msg = "Success: Download the image."
-            messagebox.showinfo(message=msg)
+            downloadHelper(img_name)
             return
         download_btn = ttk.Button(window, text="Dowdload",
                                   command=downloadBtnCmd)
@@ -224,6 +210,24 @@ def uploadBtnCmd():
     img_size = transimg.getImgSize(fpath)
     in_dict = transimg.makeDict(fname, b64_str, img_size, False)
     cpostImg(in_dict)
+    return
+
+def downloadHelper(img_name):
+    if not img_name:
+        msg = "Please select an image first."
+        messagebox.showinfo(message=msg, icon="error")
+        return
+    status, in_dict = cgetImg(img_name)
+    if not status:
+        return
+    fpath = filedialog.asksaveasfilename()
+    if not fpath:
+        msg = "Please select an directory to save your image."
+        messagebox.showerror(message=msg, icon="error")
+        return
+    transimg.b64_to_img(in_dict["b64str"], fpath)
+    msg = "Success: Download the image."
+    messagebox.showinfo(message=msg)
     return
 
 
