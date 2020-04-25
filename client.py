@@ -104,7 +104,7 @@ def mainWindow():
                                   command=popDisplayWindow)
     main_display_btn.grid(column=1, row=0)
 
-    # Add a main download button
+    # Add a main download button     
     def popDownloadWindow():
         dw = 500
         dh = 300
@@ -150,6 +150,32 @@ def mainWindow():
     main_download_btn = ttk.Button(root, text="Download",
                                    command=popDownloadWindow)
     main_download_btn.grid(column=2, row=0)
+
+    # Add a main process buttom
+    def popProcessWindow():
+        dw = 500
+        dh = 300
+        windowsize = str(dw) + "x" + str(dh)
+        window = Toplevel(root)
+        window.geometry(windowsize)
+
+        # Add a select label
+        select_label = ttk.Label(window, text="Select an image")
+        xp, yp = 15, 2
+        select_label.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a choice box
+        img_choice = StringVar()
+        img_choice_box = ttk.Combobox(window, textvariable=img_choice)
+        xp, yp = 55, 2
+        img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
+        img_choice_box["values"] = cgetNames()
+
+        # Add a process button
+        
+    main_process_btn = ttk.Button(root, text="Process",
+                                   command=popProcessWindow)
+    main_process_btn.grid(column=3, row=0)
 
     root.mainloop()
     return
@@ -222,6 +248,16 @@ def cgetImg(img_name):
     """
     r = requests.get(server_name + "/api/img/{}".format(img_name))
     return json.loads(r.text)
+
+
+def cprocessImg(img_name):
+    """Get request from client site to initialize image processing.
+    
+    Args:
+        img_name (str): Name of an image.
+    """
+    requests.get(server_name + "/api/process_img/{}".format(img_name))
+    return
 
 
 def imgResize(img_size, dw):

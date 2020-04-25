@@ -54,13 +54,11 @@ def getImg(img_name):
 
 
 @app.route("/api/process_img/<img_name>", methods=["GET"])
-def getInvImg(img_name):
-    """Get the invert image.
+def processImg(img_name):
+    """Invert the image and add the image to database.
 
     Args:
         img_name (str): Name of the image.
-    Returns:
-        dict: An dictionary contains information of inverse image.
     """
     in_dict = db.getImg(img_name)
     inv_b64_str = transimg.invertImg(in_dict["b64str"])
