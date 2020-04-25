@@ -34,13 +34,18 @@ def mainWindow():
         select_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a choice box
+        def choiceBoxCmd():
+            status, img_names = cgetNames()
+            if not status:
+                return
+            img_choice_box["values"] = img_names
+            return
         img_choice = StringVar()
-        img_choice_box = ttk.Combobox(window, textvariable=img_choice)
+        img_choice_box = ttk.Combobox(window, textvariable=img_choice,
+                                      command=choiceBoxCmd)
         xp, yp = 55, 2
         img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
-        status, img_names = cgetNames()
-        if status:
-            img_choice_box["values"] = img_names
+
 
         # Put a blank image
         img_obj = Image.open("./images/blank.png").resize((dw, dw))
@@ -124,13 +129,18 @@ def mainWindow():
         select_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a choice box
+        def choiceBoxCmd():
+            status, img_names = cgetNames()
+            if not status:
+                return
+            img_choice_box["values"] = img_names
+            return
         img_choice = StringVar()
-        img_choice_box = ttk.Combobox(window, textvariable=img_choice)
+        img_choice_box = ttk.Combobox(window, textvariable=img_choice,
+                                      command=choiceBoxCmd)
         xp, yp = 55, 2
         img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
-        status, img_names = cgetNames()
-        if status:
-            img_choice_box["values"] = img_names
+
 
         # Add a download button
         def downloadBtnCmd():
@@ -175,13 +185,17 @@ def mainWindow():
         select_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a choice box
+        def choiceBoxCmd():
+            status, img_names = cgetNames()
+            if not status:
+                return
+            img_choice_box["values"] = img_names
+            return
         img_choice = StringVar()
-        img_choice_box = ttk.Combobox(window, textvariable=img_choice)
+        img_choice_box = ttk.Combobox(window, textvariable=img_choice,
+                                      command=choiceBoxCmd)
         xp, yp = 55, 2
         img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
-        status, img_names = cgetNames()
-        if status:
-            img_choice_box["values"] = img_names
 
         # Add a process button
         def processBtnCmd():
