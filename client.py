@@ -63,7 +63,8 @@ def mainWindow():
             if not status:
                 return
             text_box.delete("1.0", "end")
-            text_box.insert(END, "name: {}".format(img_name)+"\n"+line1+"\n"+line2)
+            content = "name: {}".format(img_name) + "\n" + line1 + "\n" + line2
+            text_box.insert(END, content)
             return
         info_btn = ttk.Button(window, text="Info", command=infoBtnCmd)
         xp, yp = 60, 95
@@ -104,7 +105,7 @@ def mainWindow():
                                   command=popDisplayWindow)
     main_display_btn.grid(column=1, row=0)
 
-    # Add a main download button     
+    # Add a main download button
     def popDownloadWindow():
         dw = 500
         dh = 300
@@ -176,13 +177,13 @@ def mainWindow():
             messagebox.showinfo(message=msg)
             return
         process_btn = ttk.Button(window, text="Process",
-                                  command=processBtnCmd)
+                                 command=processBtnCmd)
         xp, yp = 40, 80
         process_btn.place(x=dw*xp//100, y=dh*yp//100)
         return
 
     main_process_btn = ttk.Button(root, text="Process",
-                                   command=popProcessWindow)
+                                  command=popProcessWindow)
     main_process_btn.grid(column=3, row=0)
 
     root.mainloop()
@@ -290,7 +291,7 @@ def cgetNames():
             list: A list of image names.
     """
     r = requests.get(server_name + "/api/all_imgs")
-    if r.status_code!= 200:
+    if r.status_code != 200:
         msg = "Error: {} - {}".format(r.status_code, "unknown error")
         messagebox.showinfo(message=msg, icon="error")
         return False, []
@@ -319,7 +320,7 @@ def cgetImg(img_name):
 
 def cprocessImg(img_name):
     """Get request from client site to initialize image processing.
-    
+
     Args:
         bool: True if the requests succeed else False.
     """

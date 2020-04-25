@@ -18,5 +18,3 @@ def test_verifyInfo(in_dict, sample_dict, expt):
     from server import verifyInfo
     ans = verifyInfo(in_dict, sample_dict)
     assert ans == expt
-
-

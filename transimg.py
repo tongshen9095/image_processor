@@ -118,7 +118,7 @@ def getImgSize(fpath):
 
 def invertImg(b64_str):
     """Invert image.
-    
+
     Args:
         b64_str (str): Base64 representation of the original image.
     Returns:

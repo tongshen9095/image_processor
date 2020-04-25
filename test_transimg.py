@@ -53,6 +53,7 @@ inv_b64_str1 = 'iVBORw0KGgoAAAANSUhE'
 inv_b64_str2 = 'iVBORw0KGgoAAAANSUhE'
 inv_b64_str3 = 'iVBORw0KGgoAAAANSUhE'
 
+
 @pytest.mark.parametrize("fpath, expt", [
     (fpath1, b64_str1),
     (fpath2, b64_str2),
