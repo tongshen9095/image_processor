@@ -113,6 +113,7 @@ def test_imgResize(img_size, dw, expt):
     ans = imgResize(img_size, dw)
     assert ans == expt
 
+
 @pytest.mark.parametrize("fpath", [
     (fpath1),
     (fpath2),
@@ -126,4 +127,3 @@ def test_b64_to_img(fpath):
     ans = filecmp.cmp(fpath, out_fpath)
     os.remove(out_fpath)
     assert ans
-

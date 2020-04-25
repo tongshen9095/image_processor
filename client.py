@@ -143,13 +143,14 @@ def mainWindow():
             msg = "Success: Download the image."
             messagebox.showinfo(message=msg)
             return
-        download_btn = ttk.Button(window, text="Dowdload", command=downloadBtnCmd)
+        download_btn = ttk.Button(window, text="Dowdload",
+                                  command=downloadBtnCmd)
         xp, yp = 40, 80
         download_btn.place(x=dw*xp//100, y=dh*yp//100)
         return
 
     main_download_btn = ttk.Button(root, text="Download",
-                                  command=popDownloadWindow)
+                                   command=popDownloadWindow)
     main_download_btn.grid(column=2, row=0)
 
     root.mainloop()
