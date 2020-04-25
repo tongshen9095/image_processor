@@ -63,7 +63,7 @@ def mainWindow():
             if not status:
                 return
             text_box.delete("1.0", "end")
-            text_box.insert(END, "img_name"+"\n"+line1+"\n"+line2)
+            text_box.insert(END, "name: {}".format(img_name)+"\n"+line1+"\n"+line2)
             return
         info_btn = ttk.Button(window, text="Info", command=infoBtnCmd)
         xp, yp = 60, 95
