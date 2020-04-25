@@ -63,7 +63,9 @@ def mainWindow():
                 msg = "Please select an image first."
                 messagebox.showinfo(message=msg, icon="error")
                 return
-            in_dict = cgetImg(img_name)
+            status, in_dict = cgetImg(img_name)
+            if not status:
+                return
             line1 = "timestamp: {}".format(in_dict["timestamp"])
             line2 = "image size: {} pixels".format(in_dict["imgsize"])
             text_box.delete("1.0", "end")
@@ -89,7 +91,9 @@ def mainWindow():
                 msg = "Please select an image first."
                 messagebox.showinfo(message=msg, icon="error")
                 return
-            in_dict = cgetImg(img_name)
+            status, in_dict = cgetImg(img_name)
+            if not status:
+                return
             x, y = imgResize(in_dict["imgsize"], dw)
             tk_img = getTkImg(in_dict["b64str"], x, y)
             img_label = ttk.Label(window, image=tk_img)
@@ -135,7 +139,9 @@ def mainWindow():
                 msg = "Please select an image first."
                 messagebox.showinfo(message=msg, icon="error")
                 return
-            in_dict = cgetImg(img_name)
+            status, in_dict = cgetImg(img_name)
+            if not status:
+                return
             fpath = filedialog.asksaveasfilename()
             if not fpath:
                 msg = "Please select an directory to save your image."
@@ -272,10 +278,16 @@ def cgetImg(img_name):
     Args:
         img_name (str): Name of an image.
     Returns:
-        dict: An dictionary of image information.
+        (tuple): tuple containing:
+            bool: True if the requests succeed else False.
+            dict: An dictionary of image information.
     """
     r = requests.get(server_name + "/api/img/{}".format(img_name))
-    return json.loads(r.text)
+    if r.status_code != 200:
+        msg = "Error: {} - {}".format(r.status_code, "unknown error")
+        messagebox.showinfo(message=msg, icon="error")
+        return False, {}
+    return True, json.loads(r.text)
 
 
 def cprocessImg(img_name):
