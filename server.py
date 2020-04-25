@@ -75,6 +75,7 @@ def verifyInfo(in_dict, sample_dict):
             return False, msg
     return True, ""
 
+
 if __name__ == "__main__":
     log_fpath = "develop.log"
     logging.basicConfig(filename=log_fpath, level=logging.INFO)

@@ -165,8 +165,8 @@ def uploadBtnCmd():
         return
     fname = parseName(fpath)
     b64_str = transimg.img2b64(fpath)
-    img_size = getImgSize(fpath)
-    in_dict = makeDict(fname, b64_str, img_size)
+    img_size = transimg.getImgSize(fpath)
+    in_dict = transimg.makeDict(fname, b64_str, img_size)
     cpostImg(in_dict)
     return
 
@@ -224,10 +224,6 @@ def cgetImg(img_name):
     return json.loads(r.text)
 
 
-
-
-
-# other funcs
 def imgResize(img_size, dw):
     """Resize the image based on the default window width.
 
@@ -258,40 +254,6 @@ def parseName(fpath):
         str: File name.
     """
     return os.path.basename(fpath)
-
-
-def getImgSize(fpath):
-    """Compute the image size.
-
-    Args:
-        fpath (str): File path.
-    Returns:
-        img_size (str): width x height
-    """
-    im = Image.open(fpath)
-    w, h = im.size
-    img_size = str(w) + "x" + str(h)
-    return img_size
-
-
-def makeDict(fname, b64_str, img_size):
-    """Create the input dictionary.
-
-    Args:
-        fname (str): File name.
-        b64_str (str): Base64 representation of the image file.
-        img_size (str): Image size.
-    Returns:
-        dict: An dictionary.
-    """
-    curr_time = datetime.datetime.now()
-    curr_time_str = curr_time.strftime('%Y-%m-%d %H:%M:%S.%f')
-    in_dict = {"name": fname,
-               "b64str": b64_str,
-               "imgsize": img_size,
-               "processed": False,
-               "timestamp": curr_time_str}
-    return in_dict
 
 
 if __name__ == "__main__":

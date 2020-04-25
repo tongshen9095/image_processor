@@ -3,6 +3,7 @@ import io
 import matplotlib.image as mpimg
 from skimage.io import imsave
 from PIL import Image, ImageTk
+import datetime
 
 
 def img2b64(fpath):
@@ -76,3 +77,35 @@ def ndarray2b64(img_ndarray):
     y = base64.b64encode(f.getvalue())
     b64_str = str(y, encoding='utf-8')
     return b64_str
+
+def makeDict(fname, b64_str, img_size):
+    """Create the input dictionary.
+
+    Args:
+        fname (str): File name.
+        b64_str (str): Base64 representation of the image file.
+        img_size (str): Image size.
+    Returns:
+        dict: An dictionary.
+    """
+    curr_time = datetime.datetime.now()
+    curr_time_str = curr_time.strftime('%Y-%m-%d %H:%M:%S.%f')
+    in_dict = {"name": fname,
+               "b64str": b64_str,
+               "imgsize": img_size,
+               "processed": False,
+               "timestamp": curr_time_str}
+    return in_dict
+
+def getImgSize(fpath):
+    """Compute the image size.
+
+    Args:
+        fpath (str): File path.
+    Returns:
+        img_size (str): width x height
+    """
+    im = Image.open(fpath)
+    w, h = im.size
+    img_size = str(w) + "x" + str(h)
+    return img_size
