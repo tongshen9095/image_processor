@@ -503,7 +503,7 @@ def cprocessImg(img_name):
 
 
 def cgetSelectedNames(pro):
-    r = requests.get(server_name + "/api/all_imgs" + pro)
+    r = requests.get(server_name + "/api/all_imgs/" + pro)
     if r.status_code != 200:
         msg = "Error: {} - {}".format(r.status_code, "unknown error")
         messagebox.showinfo(message=msg, icon="error")
