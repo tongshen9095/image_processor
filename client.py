@@ -156,6 +156,7 @@ def mainWindow():
     root.mainloop()
     return
 
+
 # function wrappers
 def uploadBtnCmd():
     """Command for upload botton."""
@@ -283,6 +284,20 @@ def b64_to_img(b64_str, fpath):
     with open(fpath, "wb") as out_file:
         out_file.write(img_bytes)
     return
+
+def ndarray2b64(img_ndarray):
+    """Convert ndarray to base64 string.
+
+    Args:
+        img_ndarray (ndarray): An ndarray contains image data.
+    Returns
+        (str): Base64 representation of an image.
+    """
+    f = io.BytesIO()
+    imsave(f, img_ndarray, plugin='pil')
+    y = base64.b64encode(f.getvalue())
+    b64_str = str(y, encoding='utf-8')
+    return b64_str
 
 
 # other funcs
