@@ -192,6 +192,7 @@ def mainWindow():
 
     # Add a main compare button
     def popCompareWindow():
+        dw0 = 500
         dw = 1100
         dh = 750
         windowsize = str(dw) + "x" + str(dh)
@@ -286,13 +287,13 @@ def mainWindow():
             pro_text_box.insert(END, content)
             return
         pro_info_btn = ttk.Button(window, text="Info", command=proInfoBtnCmd)
-        xp, yp = 60, 95
+        xp, yp = 80, 95
         pro_info_btn.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add an display button for original images
         def orgDisplayBtnCmd():
             # Put a blank image
-            img_obj = Image.open("./images/blank.png").resize((dw, dw))
+            img_obj = Image.open("./images/blank.png").resize((dw0, dw0))
             tk_img = ImageTk.PhotoImage(img_obj)
             img_label = ttk.Label(window, image=tk_img)
             img_label.image = tk_img
@@ -308,11 +309,11 @@ def mainWindow():
             status, in_dict = cgetImg(org_name)
             if not status:
                 return
-            x, y = imgResize(in_dict["imgsize"], dw)
+            x, y = imgResize(in_dict["imgsize"], dw0)
             tk_img = getTkImg(in_dict["b64str"], x, y)
             img_label = ttk.Label(window, image=tk_img)
             img_label.image = tk_img
-            img_label.place(x=(dw-x)//2, y=(dw-y)//2+dh*yp//100)
+            img_label.place(x=(dw0-x)//2, y=(dw-y)//2+dh*yp//100)
             return
 
         org_display_btn = ttk.Button(window, text="Display",
@@ -323,11 +324,11 @@ def mainWindow():
         # Add an display button for processed images
         def proDisplayBtnCmd():
             # Put a blank image
-            img_obj = Image.open("./images/blank.png").resize((dw, dw))
+            img_obj = Image.open("./images/blank.png").resize((dw0, dw0))
             tk_img = ImageTk.PhotoImage(img_obj)
             img_label = ttk.Label(window, image=tk_img)
             img_label.image = tk_img
-            xp, yp = 0, 8
+            xp, yp = 600, 8
             img_label.place(x=dw*xp//100, y=dh*yp//100)
 
             # Put a medical image on top of the blank image
@@ -339,11 +340,11 @@ def mainWindow():
             status, in_dict = cgetImg(pro_name)
             if not status:
                 return
-            x, y = imgResize(in_dict["imgsize"], dw)
+            x, y = imgResize(in_dict["imgsize"], dw0)
             tk_img = getTkImg(in_dict["b64str"], x, y)
             img_label = ttk.Label(window, image=tk_img)
             img_label.image = tk_img
-            img_label.place(x=(dw-x)//2, y=(dw-y)//2+dh*yp//100)
+            img_label.place(x=(dw0-x)//2+dw, y=(dw0-y)//2+dh*yp//100)
             return
 
         pro_display_btn = ttk.Button(window, text="Display",
