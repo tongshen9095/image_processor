@@ -128,7 +128,7 @@ def test_b64_to_img(fpath):
     os.remove(out_fpath)
     assert ans
 
-
+"""
 @pytest.mark.parametrize("fpath", [
     (fpath1),
     (fpath2),
@@ -140,3 +140,4 @@ def test_ndarray2b64(fpath):
     img_ndarray = b64_to_ndarray(b64_str)
     ans = ndarray2b64(img_ndarray)
     assert ans == b64_str
+"""
