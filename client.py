@@ -178,7 +178,8 @@ def mainWindow():
                 msg = "Please select an image first."
                 messagebox.showinfo(message=msg, icon="error")
                 return
-            cprocessImg(img_name)
+            if not cprocessImg(img_name):
+                return
             msg = "Success: Process the image."
             messagebox.showinfo(message=msg)
             return
@@ -248,7 +249,7 @@ def cgetNames():
         list: A list of image names.
     """
     r = requests.get(server_name + "/api/all_imgs")
-    if r.staus_code != 200:
+    if r.status_code!= 200:
         msg = "Error: {} - {}".format(r.status_code, "unknown error")
         messagebox.showinfo(message=msg, icon="error")
         return
@@ -276,11 +277,11 @@ def cprocessImg(img_name):
         img_name (str): Name of an image.
     """
     r = requests.get(server_name + "/api/process_img/{}".format(img_name))
-    if r.staus != 200:
+    if r.status_code != 200:
         msg = "Error: {} - {}".format(r.status_code, "unknown error")
         messagebox.showinfo(message=msg, icon="error")
-        return
-    return
+        return False
+    return True
 
 
 def imgResize(img_size, dw):
