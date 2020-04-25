@@ -83,7 +83,7 @@ def getSelectedNames(processed):
     """Returns a list of names of processed / unprocessed images.
     
     Args:
-        processed (bool): whether images are processed or not
+        processed (str): "1" processed image, "0" unprocessed image
     Return:
         list: a list of selected image names.
     """

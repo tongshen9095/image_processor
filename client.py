@@ -211,7 +211,7 @@ def mainWindow():
         # Add a choice box for orginal images
         org_choice = StringVar()
         org_choice_box = ttk.Combobox(window, textvariable=org_choice)
-        status, img_names = cgetSelectedNames(False)
+        status, img_names = cgetSelectedNames("0")
         if status:
             org_choice_box["values"] = img_names
         xp, yp = 25, 2
@@ -221,7 +221,7 @@ def mainWindow():
         pro_choice = StringVar()
         pro_choice_box = ttk.Combobox(window, 
                                             textvariable=pro_choice)
-        status, img_names = cgetSelectedNames(True)
+        status, img_names = cgetSelectedNames("1")
         if status:
             pro_choice_box["values"] = img_names
         xp, yp = 75, 2
