@@ -69,6 +69,19 @@ def processImg(img_name):
     return "Succeed: process the image", 200
 
 
+@app.route("/api/all_imgs/<processed>")
+def getSelectedNames(processed):
+    """Get the list of names of selected images.
+ 
+    Args:
+        processed (bool): whether the images are processed or not.
+    Returns:
+        list: A list of image names.
+    """
+    ans = db.getSelectedNames(processed)
+    return jsonify(ans)
+
+
 def verifyInfo(in_dict, sample_dict):
     """Verify whether the input dictionary is valid.
     An input dictionary is valid when 1) all the keys in the sample dictionary
