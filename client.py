@@ -172,7 +172,22 @@ def mainWindow():
         img_choice_box["values"] = cgetNames()
 
         # Add a process button
-        
+        def processBtnCmd():
+            img_name = img_choice.get()
+            if not img_name:
+                msg = "Please select an image first."
+                messagebox.showinfo(message=msg, icon="error")
+                return
+            cprocessImg(img_name)
+            msg = "Success: Process the image."
+            messagebox.showinfo(message=msg)
+            return
+        process_btn = ttk.Button(window, text="Process",
+                                  command=processBtnCmd)
+        xp, yp = 40, 80
+        process_btn.place(x=dw*xp//100, y=dh*yp//100)
+        return
+
     main_process_btn = ttk.Button(root, text="Process",
                                    command=popProcessWindow)
     main_process_btn.grid(column=3, row=0)
@@ -256,7 +271,11 @@ def cprocessImg(img_name):
     Args:
         img_name (str): Name of an image.
     """
-    requests.get(server_name + "/api/process_img/{}".format(img_name))
+    r = requests.get(server_name + "/api/process_img/{}".format(img_name))
+    if r.staus != 200:
+        msg = "Error: {} - {}".format(r.status_code, r.text)
+        messagebox.showinfo(message=msg, icon="error")
+        return
     return
 
 
