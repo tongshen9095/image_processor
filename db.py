@@ -87,7 +87,11 @@ def getSelectedNames(processed):
     Return:
         list: a list of selected image names.
     """
-    imgs = Image.objects.raw({"processed": processed})
+    if processed == "1":
+        status = True
+    else:
+        status = False
+    imgs = Image.objects.raw({"processed": status})
     ans = []
     for img in imgs:
         ans.append(img.name)
