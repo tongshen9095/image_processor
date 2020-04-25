@@ -4,6 +4,7 @@ import matplotlib.image as mpimg
 from skimage.io import imsave
 from PIL import Image, ImageTk
 import datetime
+from skimage import util
 
 
 def img2b64(fpath):
@@ -113,3 +114,17 @@ def getImgSize(fpath):
     w, h = im.size
     img_size = str(w) + "x" + str(h)
     return img_size
+
+
+def invertImg(b64_str):
+    """Invert image.
+    
+    Args:
+        b64_str (str): Base64 representation of the original image.
+    Returns:
+        str: Base64 representation of the inversed image.
+    """
+    img_ndarray = b64_to_ndarray(b64_str)
+    inv_ndarray = util.invert(img_ndarray)
+    inv_b64_str = ndarray2b64(inv_ndarray)
+    return inv_b64_str
