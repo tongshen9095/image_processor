@@ -42,7 +42,6 @@ def mainWindow():
         xp, yp = 55, 2
         img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
 
-
         # Put a blank image
         img_obj = Image.open("./images/blank.png").resize((dw, dw))
         tk_img = ImageTk.PhotoImage(img_obj)
@@ -80,7 +79,7 @@ def mainWindow():
             xp, yp = 0, 8
             img_label.place(x=dw*xp//100, y=dh*yp//100)
 
-            # Put medical image on top of the blank image
+            # Put a medical image on top of the blank image
             img_name = img_choice.get()
             if not img_name:
                 msg = "Please select an image first."
@@ -126,7 +125,6 @@ def mainWindow():
             img_choice_box["values"] = img_names
         xp, yp = 55, 2
         img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
-
 
         # Add a download button
         def downloadBtnCmd():
@@ -208,6 +206,16 @@ def uploadBtnCmd():
 
 
 def infoHelper(img_name):
+    """Help fill the function of info button.
+
+    Args:
+        img_name: Name of the selected image.
+    Returns:
+        (tuple): tuple containing:
+            bool: True if the requests succeed else False.
+            str: Image timestamp.
+            str: Image size.
+    """
     if not img_name:
         msg = "Please select an image first."
         messagebox.showinfo(message=msg, icon="error")
@@ -221,6 +229,11 @@ def infoHelper(img_name):
 
 
 def downloadHelper(img_name):
+    """Help fill the function of download button.
+
+    Args:
+        img_name: Name of the selected image.
+    """
     if not img_name:
         msg = "Please select an image first."
         messagebox.showinfo(message=msg, icon="error")
