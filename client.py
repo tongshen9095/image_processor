@@ -298,7 +298,7 @@ def b64_to_img(b64_str, fpath):
     """
     img_bytes = base64.b64decode(b64_str)
     with open(fpath, "wb") as out_file:
-        out_file.writ(img_bytes)
+        out_file.write(img_bytes)
     return
 
 if __name__ == "__main__":
