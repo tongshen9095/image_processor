@@ -108,7 +108,7 @@ def mainWindow():
 
     # Add a main download button
     def popDownloadWindow():
-        dw = 200
+        dw = 500
         dh = 300
         windowsize = str(dw) + "x" + str(dh)
         window = Toplevel(root)
@@ -125,6 +125,11 @@ def mainWindow():
         xp, yp = 55, 2
         img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
         img_choice_box["values"] = cgetNames()
+
+        # Add a download button
+        download_btn = ttk.Button(window, text="Dowdload", command=downloadBtnCmd)
+        xp, yp = 40, 95
+        download_btn.place(x=dw*xp//100, y=dh*yp//100)
         return
 
     main_download_btn = ttk.Button(root, text="Download",
