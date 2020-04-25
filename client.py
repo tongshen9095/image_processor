@@ -127,6 +127,22 @@ def mainWindow():
         img_choice_box["values"] = cgetNames()
 
         # Add a download button
+        def downloadBtnCmd():
+            img_name = img_choice.get()
+            if not img_name:
+                msg = "Please select an image first."
+                messagebox.showinfo(message=msg, icon="error")
+                return
+            in_dict = cgetImg(img_name)
+            fpath = filedialog.asksaveasfilename()
+            if not fpath:
+                msg = "Please select an directory to save your image."
+                messagebox.showerror(message=msg, icon="error")
+                return
+            b64_to_img(in_dict["b64str"], fpath)
+            msg = "Success: Download the image."
+            messagebox.showinfo(message=msg)
+            return
         download_btn = ttk.Button(window, text="Dowdload", command=downloadBtnCmd)
         xp, yp = 40, 95
         download_btn.place(x=dw*xp//100, y=dh*yp//100)
@@ -235,10 +251,10 @@ def cpostImg(in_dict):
     r = requests.post(server_name + "/api/new_img", json=in_dict)
     if r.status_code == 200:
         msg = "Success: {} - {}".format(r.status_code, r.text)
-        messagebox.showinfo(message=msg, title="upload")
+        messagebox.showinfo(message=msg)
     else:
         msg = "Error: {} - {}".format(r.status_code, r.text)
-        messagebox.showinfo(message=msg, title="upload", icon="error")
+        messagebox.showinfo(message=msg, icon="error")
     return
 
 
