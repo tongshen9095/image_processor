@@ -66,7 +66,7 @@ def processImg(img_name):
     inv_in_dict = transimg.makeDict(fname, inv_b64_str,
                                     in_dict["imgsize"], True)
     db.addImg(inv_in_dict)
-    return 
+    return "Succeed: process the image", 200
 
 
 def verifyInfo(in_dict, sample_dict):
