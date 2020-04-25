@@ -60,15 +60,9 @@ def mainWindow():
         # Add an Info button
         def infoBtnCmd():
             img_name = img_choice.get()
-            if not img_name:
-                msg = "Please select an image first."
-                messagebox.showinfo(message=msg, icon="error")
-                return
-            status, in_dict = cgetImg(img_name)
+            status, line1, line2 = infoHelper(img_name)
             if not status:
                 return
-            line1 = "timestamp: {}".format(in_dict["timestamp"])
-            line2 = "image size: {} pixels".format(in_dict["imgsize"])
             text_box.delete("1.0", "end")
             text_box.insert(END, line1+"\n"+line2)
             return
@@ -211,6 +205,20 @@ def uploadBtnCmd():
     in_dict = transimg.makeDict(fname, b64_str, img_size, False)
     cpostImg(in_dict)
     return
+
+
+def infoHelper(img_name):
+    if not img_name:
+        msg = "Please select an image first."
+        messagebox.showinfo(message=msg, icon="error")
+        return False, "", ""
+    status, in_dict = cgetImg(img_name)
+    if not status:
+        return False, "", ""
+    line1 = "timestamp: {}".format(in_dict["timestamp"])
+    line2 = "image size: {} pixels".format(in_dict["imgsize"])
+    return True, line1, line2
+
 
 def downloadHelper(img_name):
     if not img_name:
