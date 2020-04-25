@@ -16,7 +16,7 @@ server_name = "http://127.0.0.1:5000"
 def mainWindow():
     root = Tk()
 
-    # Add a upload button
+    # Add a main upload button
     upload_btn = ttk.Button(root, text="Upload", command=uploadBtnCmd)
     upload_btn.grid(column=0, row=0)
 
@@ -248,6 +248,10 @@ def cgetNames():
         list: A list of image names.
     """
     r = requests.get(server_name + "/api/all_imgs")
+    if r.staus_code != 200:
+        msg = "Error: {} - {}".format(r.status_code, "unknown error")
+        messagebox.showinfo(message=msg, icon="error")
+        return
     ans = json.loads(r.text)
     ans = tuple(ans)
     return ans
@@ -273,7 +277,7 @@ def cprocessImg(img_name):
     """
     r = requests.get(server_name + "/api/process_img/{}".format(img_name))
     if r.staus != 200:
-        msg = "Error: {} - {}".format(r.status_code, r.text)
+        msg = "Error: {} - {}".format(r.status_code, "unknown error")
         messagebox.showinfo(message=msg, icon="error")
         return
     return

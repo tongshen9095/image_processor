@@ -63,7 +63,7 @@ def processImg(img_name):
     in_dict = db.getImg(img_name)
     inv_b64_str = transimg.invertImg(in_dict["b64str"])
     inv_in_dict = transimg.makeDict(img_name+"processed", inv_b64_str,
-                                    in_dict["imgsize"], True)
+                                    in_dict["img_size"], True)
     db.addImg(inv_in_dict)
     return 
 
