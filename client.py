@@ -144,7 +144,7 @@ def mainWindow():
             messagebox.showinfo(message=msg)
             return
         download_btn = ttk.Button(window, text="Dowdload", command=downloadBtnCmd)
-        xp, yp = 40, 95
+        xp, yp = 40, 80
         download_btn.place(x=dw*xp//100, y=dh*yp//100)
         return
 
