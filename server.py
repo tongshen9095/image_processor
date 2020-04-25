@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 import logging
 import db
+import transimg
 
 app = Flask(__name__)
 
@@ -50,6 +51,23 @@ def getImg(img_name):
     """
     in_dict = db.getImg(img_name)
     return jsonify(in_dict)
+
+
+@app.route("/api/process_img/<img_name>", methods=["GET"])
+def getInvImg(img_name):
+    """Get the invert image.
+
+    Args:
+        img_name (str): Name of the image.
+    Returns:
+        dict: An dictionary contains information of inverse image.
+    """
+    in_dict = db.getImg(img_name)
+    inv_b64_str = transimg.invertImg(in_dict["b64str"])
+    inv_in_dict = transimg.makeDict(img_name+"processed", inv_b64_str,
+                                    in_dict["img_size"], True)
+    db.addImg(inv_in_dict)
+    return 
 
 
 def verifyInfo(in_dict, sample_dict):
