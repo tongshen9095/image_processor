@@ -61,7 +61,7 @@ def mainWindow():
             img_name = img_choice.get()
             if not img_name:
                 msg = "Please select an image first."
-                messagebox.showinfo(message=msg, title="Info", icon="error")
+                messagebox.showinfo(message=msg, icon="error")
                 return
             in_dict = cgetImg(img_name)
             line1 = "timestamp: {}".format(in_dict["timestamp"])
@@ -87,7 +87,7 @@ def mainWindow():
             img_name = img_choice.get()
             if not img_name:
                 msg = "Please select an image first."
-                messagebox.showinfo(message=msg, title="Display", icon="error")
+                messagebox.showinfo(message=msg, icon="error")
                 return
             in_dict = cgetImg(img_name)
             x, y = imgResize(in_dict["imgsize"], dw)
@@ -106,13 +106,64 @@ def mainWindow():
                                   command=popDisplayWindow)
     main_display_btn.grid(column=1, row=0)
 
+    # Add a main download button
+    def popDownloadWindow():
+        dw = 500
+        dh = 300
+        windowsize = str(dw) + "x" + str(dh)
+        window = Toplevel(root)
+        window.geometry(windowsize)
+
+        # Add a select label
+        select_label = ttk.Label(window, text="Select an image")
+        xp, yp = 15, 2
+        select_label.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a choice box
+        img_choice = StringVar()
+        img_choice_box = ttk.Combobox(window, textvariable=img_choice)
+        xp, yp = 55, 2
+        img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
+        img_choice_box["values"] = cgetNames()
+
+        # Add a download button
+        def downloadBtnCmd():
+            img_name = img_choice.get()
+            if not img_name:
+                msg = "Please select an image first."
+                messagebox.showinfo(message=msg, icon="error")
+                return
+            in_dict = cgetImg(img_name)
+            fpath = filedialog.asksaveasfilename()
+            if not fpath:
+                msg = "Please select an directory to save your image."
+                messagebox.showerror(message=msg, icon="error")
+                return
+            b64_to_img(in_dict["b64str"], fpath)
+            msg = "Success: Download the image."
+            messagebox.showinfo(message=msg)
+            return
+        download_btn = ttk.Button(window, text="Dowdload",
+                                  command=downloadBtnCmd)
+        xp, yp = 40, 80
+        download_btn.place(x=dw*xp//100, y=dh*yp//100)
+        return
+
+    main_download_btn = ttk.Button(root, text="Download",
+                                   command=popDownloadWindow)
+    main_download_btn.grid(column=2, row=0)
+
     root.mainloop()
     return
 
 
 def uploadBtnCmd():
     """Command for upload botton."""
-    fpath = selectImg()
+    fpath = filedialog.askopenfilename()
+    if not fpath:
+        msg = "Please select an image first."
+        messagebox.showinfo(message=msg, icon="error")
+        return
     fname = parseName(fpath)
     b64_str = img2b64(fpath)
     img_size = getImgSize(fpath)
@@ -131,16 +182,6 @@ def getTkImg(b64_str, x, y):
     img_ndarray = b64_to_ndarray(b64_str)
     tk_img = ndarray2img(img_ndarray, x, y)
     return tk_img
-
-
-def selectImg():
-    """Select an image from file browser.
-
-    Returns:
-        str: File path of the selected image.
-    """
-    fpath = filedialog.askopenfilename()
-    return fpath
 
 
 def parseName(fpath):
@@ -211,10 +252,10 @@ def cpostImg(in_dict):
     r = requests.post(server_name + "/api/new_img", json=in_dict)
     if r.status_code == 200:
         msg = "Success: {} - {}".format(r.status_code, r.text)
-        messagebox.showinfo(message=msg, title="upload")
+        messagebox.showinfo(message=msg)
     else:
         msg = "Error: {} - {}".format(r.status_code, r.text)
-        messagebox.showinfo(message=msg, title="upload", icon="error")
+        messagebox.showinfo(message=msg, icon="error")
     return
 
 
@@ -294,6 +335,18 @@ def imgResize(img_size, dw):
         new_y = min(y, dw)
         new_x = x * new_y // y
     return new_x, new_y
+
+
+def b64_to_img(b64_str, fpath):
+    """Convert b64 string to image file.
+
+    Args:
+        b64_str (str): Base64 representation of an image file.
+    """
+    img_bytes = base64.b64decode(b64_str)
+    with open(fpath, "wb") as out_file:
+        out_file.write(img_bytes)
+    return
 
 if __name__ == "__main__":
     mainWindow()
