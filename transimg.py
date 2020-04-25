@@ -64,6 +64,7 @@ def b64_to_img(b64_str, fpath):
         out_file.write(img_bytes)
     return
 
+
 def ndarray2b64(img_ndarray):
     """Convert ndarray to base64 string.
 
@@ -77,6 +78,7 @@ def ndarray2b64(img_ndarray):
     y = base64.b64encode(f.getvalue())
     b64_str = str(y, encoding='utf-8')
     return b64_str
+
 
 def makeDict(fname, b64_str, img_size):
     """Create the input dictionary.
@@ -96,6 +98,7 @@ def makeDict(fname, b64_str, img_size):
                "processed": False,
                "timestamp": curr_time_str}
     return in_dict
+
 
 def getImgSize(fpath):
     """Compute the image size.
