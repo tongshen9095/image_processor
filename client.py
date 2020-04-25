@@ -34,15 +34,11 @@ def mainWindow():
         select_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a choice box
-        def choiceBoxCmd():
-            status, img_names = cgetNames()
-            if not status:
-                return
-            img_choice_box["values"] = img_names
-            return
         img_choice = StringVar()
-        img_choice_box = ttk.Combobox(window, textvariable=img_choice,
-                                      command=choiceBoxCmd)
+        img_choice_box = ttk.Combobox(window, textvariable=img_choice)
+        status, img_names = cgetNames()
+        if status:
+            img_choice_box["values"] = img_names
         xp, yp = 55, 2
         img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
 
@@ -129,15 +125,11 @@ def mainWindow():
         select_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a choice box
-        def choiceBoxCmd():
-            status, img_names = cgetNames()
-            if not status:
-                return
-            img_choice_box["values"] = img_names
-            return
         img_choice = StringVar()
-        img_choice_box = ttk.Combobox(window, textvariable=img_choice,
-                                      command=choiceBoxCmd)
+        img_choice_box = ttk.Combobox(window, textvariable=img_choice)
+        status, img_names = cgetNames()
+        if status:
+            img_choice_box["values"] = img_names
         xp, yp = 55, 2
         img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
 
@@ -185,15 +177,11 @@ def mainWindow():
         select_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a choice box
-        def choiceBoxCmd():
-            status, img_names = cgetNames()
-            if not status:
-                return
-            img_choice_box["values"] = img_names
-            return
         img_choice = StringVar()
-        img_choice_box = ttk.Combobox(window, textvariable=img_choice,
-                                      command=choiceBoxCmd)
+        img_choice_box = ttk.Combobox(window, textvariable=img_choice)
+        status, img_names = cgetNames()
+        if status:
+            img_choice_box["values"] = img_names
         xp, yp = 55, 2
         img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
 
