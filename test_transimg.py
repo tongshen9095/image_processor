@@ -49,6 +49,9 @@ img_ndarray3 = [[3, 3, 3],
                 [0, 0, 0],
                 [0, 0, 0]]
 
+inv_b64_str1 = 'iVBORw0KGgoAAAANSUhE'
+inv_b64_str2 = 'iVBORw0KGgoAAAANSUhE'
+inv_b64_str3 = 'iVBORw0KGgoAAAANSUhE'
 
 @pytest.mark.parametrize("fpath, expt", [
     (fpath1, b64_str1),
@@ -109,3 +112,16 @@ def test_b64_to_img(fpath):
     ans = filecmp.cmp(fpath, out_fpath)
     os.remove(out_fpath)
     assert ans
+
+
+@pytest.mark.parametrize("fpath, expt", [
+    (fpath1, inv_b64_str1),
+    (fpath2, inv_b64_str2),
+    (fpath3, inv_b64_str3)
+])
+def test_invertImg(fpath, expt):
+    from transimg import img2b64, invertImg
+    b64_str1 = img2b64(fpath)
+    inv_b64_str = invertImg(b64_str1)
+    ans = inv_b64_str[:20]
+    assert ans == expt
