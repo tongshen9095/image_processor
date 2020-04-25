@@ -80,13 +80,14 @@ def ndarray2b64(img_ndarray):
     return b64_str
 
 
-def makeDict(fname, b64_str, img_size):
+def makeDict(fname, b64_str, img_size, processed_status):
     """Create the input dictionary.
 
     Args:
         fname (str): File name.
         b64_str (str): Base64 representation of the image file.
         img_size (str): Image size.
+        processed_status (bool): Whether the image is processed.
     Returns:
         dict: An dictionary.
     """
@@ -95,7 +96,7 @@ def makeDict(fname, b64_str, img_size):
     in_dict = {"name": fname,
                "b64str": b64_str,
                "imgsize": img_size,
-               "processed": False,
+               "processed": processed_status,
                "timestamp": curr_time_str}
     return in_dict
 
