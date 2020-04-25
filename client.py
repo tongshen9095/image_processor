@@ -59,6 +59,10 @@ def mainWindow():
         # Add an Info button
         def infoBtnCmd():
             img_name = img_choice.get()
+            if not img_name:
+                msg = "Please select an image first."
+                messagebox.showinfo(message=msg, icon="error")
+                return
             status, line1, line2 = infoHelper(img_name)
             if not status:
                 return
@@ -185,6 +189,172 @@ def mainWindow():
     main_process_btn = ttk.Button(root, text="Process",
                                   command=popProcessWindow)
     main_process_btn.grid(column=3, row=0)
+
+    # Add a main compare button
+    def popCompareWindow():
+        dw0 = 500
+        dw = 1100
+        dh = 750
+        windowsize = str(dw) + "x" + str(dh)
+        window = Toplevel(root)
+        window.geometry(windowsize)
+
+        # Add a select an orginal image label
+        org_label = ttk.Label(window, text="Select an original image")
+        xp, yp = 5, 2
+        org_label.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a select a processed image label
+        pro_label = ttk.Label(window, text="Select an processed image")
+        xp, yp = 55, 2
+        pro_label.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a choice box for orginal images
+        org_choice = StringVar()
+        org_choice_box = ttk.Combobox(window, textvariable=org_choice)
+        status, img_names = cgetSelectedNames("0")
+        if status:
+            org_choice_box["values"] = img_names
+        xp, yp = 25, 2
+        org_choice_box.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a choice box for processed images
+        pro_choice = StringVar()
+        pro_choice_box = ttk.Combobox(window, textvariable=pro_choice)
+        status, img_names = cgetSelectedNames("1")
+        if status:
+            pro_choice_box["values"] = img_names
+        xp, yp = 75, 2
+        pro_choice_box.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Put a blank image for display orginal images
+        img_obj = Image.open("./images/blank.png").resize((dw, dw))
+        tk_img = ImageTk.PhotoImage(img_obj)
+        org_img_label = ttk.Label(window, image=tk_img)
+        org_img_label.image = tk_img
+        xp, yp = 0, 8
+        org_img_label.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Put a blank image for display processed images
+        pro_img_label = ttk.Label(window, image=tk_img)
+        pro_img_label.image = tk_img
+        xp, yp = 600, 8
+        pro_img_label.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a text box for orginal image
+        h, w = 6, 280
+        org_text_box = Text(window, height=h, width=w)
+        xp, yp = 10, 82
+        org_text_box.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a processed box for orginal image
+        h, w = 6, 280
+        pro_text_box = Text(window, height=h, width=w)
+        xp, yp = 60, 82
+        pro_text_box.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add an Info button for origianl images
+        def orgInfoBtnCmd():
+            org_name = org_choice.get()
+            if not org_name:
+                msg = "Please select an image first."
+                messagebox.showinfo(message=msg, icon="error")
+                return
+            status, line1, line2 = infoHelper(org_name)
+            if not status:
+                return
+            org_text_box.delete("1.0", "end")
+            content = "name: {}".format(org_name) + "\n" + line1 + "\n" + line2
+            org_text_box.insert(END, content)
+            return
+        org_info_btn = ttk.Button(window, text="Info", command=orgInfoBtnCmd)
+        xp, yp = 30, 95
+        org_info_btn.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add an Info button for processed images
+        def proInfoBtnCmd():
+            pro_name = pro_choice.get()
+            if not pro_name:
+                msg = "Please select an image first."
+                messagebox.showinfo(message=msg, icon="error")
+                return
+            status, line1, line2 = infoHelper(pro_name)
+            if not status:
+                return
+            pro_text_box.delete("1.0", "end")
+            content = "name: {}".format(pro_name) + "\n" + line1 + "\n" + line2
+            pro_text_box.insert(END, content)
+            return
+        pro_info_btn = ttk.Button(window, text="Info", command=proInfoBtnCmd)
+        xp, yp = 80, 95
+        pro_info_btn.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add an display button for original images
+        def orgDisplayBtnCmd():
+            # Put a blank image
+            img_obj = Image.open("./images/blank.png").resize((dw0, dw0))
+            tk_img = ImageTk.PhotoImage(img_obj)
+            img_label = ttk.Label(window, image=tk_img)
+            img_label.image = tk_img
+            xp, yp = 0, 8
+            img_label.place(x=dw*xp//100, y=dh*yp//100)
+
+            # Put a medical image on top of the blank image
+            org_name = org_choice.get()
+            if not org_name:
+                msg = "Please select an image first."
+                messagebox.showinfo(message=msg, icon="error")
+                return
+            status, in_dict = cgetImg(org_name)
+            if not status:
+                return
+            x, y = imgResize(in_dict["imgsize"], dw0)
+            tk_img = getTkImg(in_dict["b64str"], x, y)
+            img_label = ttk.Label(window, image=tk_img)
+            img_label.image = tk_img
+            img_label.place(x=(dw0-x)//2, y=(dw0-y)//2+dh*yp//100)
+            return
+
+        org_display_btn = ttk.Button(window, text="Display",
+                                     command=orgDisplayBtnCmd)
+        xp, yp = 10, 95
+        org_display_btn.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add an display button for processed images
+        def proDisplayBtnCmd():
+            # Put a blank image
+            img_obj = Image.open("./images/blank.png").resize((dw0, dw0))
+            tk_img = ImageTk.PhotoImage(img_obj)
+            img_label = ttk.Label(window, image=tk_img)
+            img_label.image = tk_img
+            yp = 8
+            img_label.place(x=600, y=dh*yp//100)
+
+            # Put a medical image on top of the blank image
+            pro_name = pro_choice.get()
+            if not pro_name:
+                msg = "Please select an image first."
+                messagebox.showinfo(message=msg, icon="error")
+                return
+            status, in_dict = cgetImg(pro_name)
+            if not status:
+                return
+            x, y = imgResize(in_dict["imgsize"], dw0)
+            tk_img = getTkImg(in_dict["b64str"], x, y)
+            img_label = ttk.Label(window, image=tk_img)
+            img_label.image = tk_img
+            img_label.place(x=(dw0-x)//2+600, y=(dw0-y)//2+dh*yp//100)
+            return
+
+        pro_display_btn = ttk.Button(window, text="Display",
+                                     command=proDisplayBtnCmd)
+        xp, yp = 60, 95
+        pro_display_btn.place(x=dw*xp//100, y=dh*yp//100)
+        return
+
+    compare_btn = ttk.Button(root, text="Compare",
+                             command=popCompareWindow)
+    compare_btn.grid(column=4, row=0)
 
     root.mainloop()
     return
@@ -332,11 +502,22 @@ def cprocessImg(img_name):
     return True
 
 
+def cgetSelectedNames(pro):
+    r = requests.get(server_name + "/api/all_imgs/" + pro)
+    if r.status_code != 200:
+        msg = "Error: {} - {}".format(r.status_code, "unknown error")
+        messagebox.showinfo(message=msg, icon="error")
+        return False, []
+    ans = json.loads(r.text)
+    ans = tuple(ans)
+    return True, ans
+
+
 def imgResize(img_size, dw):
     """Resize the image based on the default window width.
 
     Args:
-        img_size (str): Original image size.
+        img_size (str): org image size.
         dw (int): Default window width.
     Returns:
         tuple: Adjusted image size.

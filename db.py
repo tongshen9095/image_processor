@@ -52,7 +52,7 @@ def hasImg(img_name):
     Args:
         img_name (str): Name of the image.
     Returns:
-        (bool): True if the image is in the database else False.
+        bool: True if the image is in the database else False.
     """
     try:
         Image.objects.raw({"_id": img_name}).first()
@@ -77,3 +77,22 @@ def getImg(img_name):
     in_dict["processed"] = img.processed
     in_dict["timestamp"] = img.timestamp
     return in_dict
+
+
+def getSelectedNames(processed):
+    """Returns a list of names of processed / unprocessed images.
+
+    Args:
+        processed (str): "1" processed image, "0" unprocessed image
+    Return:
+        list: a list of selected image names.
+    """
+    if processed == "1":
+        status = True
+    else:
+        status = False
+    imgs = Image.objects.raw({"processed": status})
+    ans = []
+    for img in imgs:
+        ans.append(img.name)
+    return ans

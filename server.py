@@ -66,7 +66,20 @@ def processImg(img_name):
     inv_in_dict = transimg.makeDict(fname, inv_b64_str,
                                     in_dict["imgsize"], True)
     db.addImg(inv_in_dict)
-    return "Succeed: process the image", 200
+    return "Succeed: process the image"
+
+
+@app.route("/api/all_imgs/<processed>")
+def getSelectedNames(processed):
+    """Get the list of names of selected images.
+
+    Args:
+        processed (str): "1" processed image, "0" unprocessed image
+    Returns:
+        list: A list of image names.
+    """
+    ans = db.getSelectedNames(processed)
+    return jsonify(ans)
 
 
 def verifyInfo(in_dict, sample_dict):
