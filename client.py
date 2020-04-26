@@ -205,7 +205,7 @@ def mainWindow():
 
         # Add a select a processed image label
         pro_label = ttk.Label(window, text="Select an processed image")
-        xp, yp = 55, 2
+        xp, yp = 60, 2
         pro_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a choice box for orginal images
@@ -223,7 +223,7 @@ def mainWindow():
         status, img_names = cgetSelectedNames("1")
         if status:
             pro_choice_box["values"] = img_names
-        xp, yp = 75, 2
+        xp, yp = 80, 2
         pro_choice_box.place(x=dw*xp//100, y=dh*yp//100)
 
         # Put a blank image for display orginal images
@@ -237,20 +237,20 @@ def mainWindow():
         # Put a blank image for display processed images
         pro_img_label = ttk.Label(window, image=tk_img)
         pro_img_label.image = tk_img
-        xp, yp = 600, 8
-        pro_img_label.place(x=dw*xp//100, y=dh*yp//100)
+        yp = 8
+        pro_img_label.place(x=600, y=dh*yp//100)
 
         # Add a text box for orginal image
         org_text_box = Text(window)
         xp, yp = 12, 82
         org_text_box.place(x=dw*xp//100, y=dh*yp//100)
 
-        # Add a processed box for orginal image
+        # Add a text box for processed image
         pro_text_box = Text(window)
-        xp, yp = 62, 82
+        xp, yp = 67, 82
         pro_text_box.place(x=dw*xp//100, y=dh*yp//100)
 
-        # Add an Info button for origianl images
+        # Add an Info button for originl images
         def orgInfoBtnCmd():
             org_name = org_choice.get()
             if not org_name:
@@ -283,7 +283,7 @@ def mainWindow():
             pro_text_box.insert(END, content)
             return
         pro_info_btn = ttk.Button(window, text="Info", command=proInfoBtnCmd)
-        xp, yp = 80, 95
+        xp, yp = 85, 95
         pro_info_btn.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add an display button for original images
@@ -296,7 +296,7 @@ def mainWindow():
             xp, yp = 0, 8
             img_label.place(x=dw*xp//100, y=dh*yp//100)
 
-            # Put a medical image on top of the blank image
+            # Put an original image on top of the blank image
             org_name = org_choice.get()
             if not org_name:
                 msg = "Please select an image first."
@@ -327,7 +327,7 @@ def mainWindow():
             yp = 8
             img_label.place(x=600, y=dh*yp//100)
 
-            # Put a medical image on top of the blank image
+            # Put a processed image on top of the blank image
             pro_name = pro_choice.get()
             if not pro_name:
                 msg = "Please select an image first."
@@ -345,7 +345,7 @@ def mainWindow():
 
         pro_display_btn = ttk.Button(window, text="Display",
                                      command=proDisplayBtnCmd)
-        xp, yp = 60, 95
+        xp, yp = 65, 95
         pro_display_btn.place(x=dw*xp//100, y=dh*yp//100)
         return
 
