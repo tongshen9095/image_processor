@@ -205,7 +205,7 @@ def mainWindow():
 
         # Add a select a processed image label
         pro_label = ttk.Label(window, text="Select an processed image")
-        xp, yp = 60, 2
+        xp, yp = 58, 2
         pro_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a choice box for orginal images
@@ -223,7 +223,7 @@ def mainWindow():
         status, img_names = cgetSelectedNames("1")
         if status:
             pro_choice_box["values"] = img_names
-        xp, yp = 80, 2
+        xp, yp = 78, 2
         pro_choice_box.place(x=dw*xp//100, y=dh*yp//100)
 
         # Put a blank image for display orginal images
@@ -247,7 +247,7 @@ def mainWindow():
 
         # Add a text box for processed image
         pro_text_box = Text(window)
-        xp, yp = 67, 82
+        xp, yp = 65, 82
         pro_text_box.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add an Info button for originl images
@@ -283,7 +283,7 @@ def mainWindow():
             pro_text_box.insert(END, content)
             return
         pro_info_btn = ttk.Button(window, text="Info", command=proInfoBtnCmd)
-        xp, yp = 85, 95
+        xp, yp = 82, 95
         pro_info_btn.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add an display button for original images
@@ -345,7 +345,7 @@ def mainWindow():
 
         pro_display_btn = ttk.Button(window, text="Display",
                                      command=proDisplayBtnCmd)
-        xp, yp = 65, 95
+        xp, yp = 62, 95
         pro_display_btn.place(x=dw*xp//100, y=dh*yp//100)
         return
 
@@ -441,7 +441,7 @@ def cpostImg(in_dict):
     """
     r = requests.post(server_name + "/api/new_img", json=in_dict)
     if r.status_code == 200:
-        msg = "Success: {} - {}".format(r.status_code, r.text)
+        msg = "Success: {}".format(r.text)
         messagebox.showinfo(message=msg)
     else:
         msg = "Error: {} - {}".format(r.status_code, r.text)
