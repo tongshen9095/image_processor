@@ -241,15 +241,13 @@ def mainWindow():
         pro_img_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a text box for orginal image
-        h, w = 6, 280
-        org_text_box = Text(window, height=h, width=w)
-        xp, yp = 10, 82
+        org_text_box = Text(window)
+        xp, yp = 12, 82
         org_text_box.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a processed box for orginal image
-        h, w = 6, 280
-        pro_text_box = Text(window, height=h, width=w)
-        xp, yp = 60, 82
+        pro_text_box = Text(window)
+        xp, yp = 62, 82
         pro_text_box.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add an Info button for origianl images
