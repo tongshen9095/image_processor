@@ -51,10 +51,9 @@ def mainWindow():
         img_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a text box
-        h, w = 6, 280
-        text_box = Text(window, height=h, width=w)
-        yp = 82
-        text_box.place(x=(dw-w)//2, y=dh*yp//100)
+        text_box = Text(window)
+        xp, yp = 24, 82
+        text_box.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add an Info button
         def infoBtnCmd():
