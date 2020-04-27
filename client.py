@@ -161,7 +161,7 @@ def mainWindow():
         # Add a choice box
         img_choice = StringVar()
         img_choice_box = ttk.Combobox(window, textvariable=img_choice)
-        status, img_names = cgetNames()
+        status, img_names = cgetSelectedNames("0")
         if status:
             img_choice_box["values"] = img_names
         xp, yp = 55, 2
