@@ -10,7 +10,7 @@ import datetime
 import json
 import transimg
 
-server_name = "http://127.0.0.1:5000"
+server_name = "http://vcm-14274.vm.duke.edu:5000"
 
 
 def mainWindow():
