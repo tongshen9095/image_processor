@@ -443,7 +443,7 @@ def infoHelper(img_name):
 
 
 def downloadHelper(img_name):
-    """Help fill the function of download button.
+    """Help fulfill the function of download button.
 
     Args:
         img_name: Name of the selected image.
@@ -462,6 +462,24 @@ def downloadHelper(img_name):
         return
     transimg.b64_to_img(in_dict["b64str"], fpath)
     msg = "Success: Download the image."
+    messagebox.showinfo(message=msg)
+    return
+
+
+def delHelper(img_name):
+    """Help fulfill the function of delete button.
+
+    Args:
+        img_name: Name of the selected image.
+    """
+    if not img_name:
+        msg = "Please select an image first."
+        messagebox.showinfo(message=msg, icon="error")
+        return
+    status = cdelImg(img_name)
+    if not status:
+        return
+    msg = "Success: Delete the image."
     messagebox.showinfo(message=msg)
     return
 
