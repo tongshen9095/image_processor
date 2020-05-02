@@ -37,7 +37,7 @@ def mainWindow():
         def updateChoice():
             status, img_names = cgetNames()
             if status:
-                img_choice_box["values"] = img_names 
+                img_choice_box["values"] = img_names
         img_choice = StringVar()
         img_choice_box = ttk.Combobox(window, textvariable=img_choice,
                                       postcommand=updateChoice)
@@ -127,7 +127,7 @@ def mainWindow():
         def updateChoice():
             status, img_names = cgetNames()
             if status:
-                img_choice_box["values"] = img_names 
+                img_choice_box["values"] = img_names
         img_choice = StringVar()
         img_choice_box = ttk.Combobox(window, textvariable=img_choice,
                                       postcommand=updateChoice)
@@ -166,7 +166,7 @@ def mainWindow():
         def updateChoice():
             status, img_names = cgetSelectedNames("0")
             if status:
-                org_choice_box["values"] = img_names 
+                org_choice_box["values"] = img_names
         org_choice = StringVar()
         org_choice_box = ttk.Combobox(window, textvariable=org_choice,
                                       postcommand=updateChoice)
@@ -218,7 +218,7 @@ def mainWindow():
         def updateOrgChoice():
             status, img_names = cgetSelectedNames("0")
             if status:
-                org_choice_box["values"] = img_names 
+                org_choice_box["values"] = img_names
         org_choice = StringVar()
         org_choice_box = ttk.Combobox(window, textvariable=org_choice,
                                       postcommand=updateOrgChoice)
@@ -229,7 +229,7 @@ def mainWindow():
         def updateProChoice():
             status, img_names = cgetSelectedNames("1")
             if status:
-                pro_choice_box["values"] = img_names 
+                pro_choice_box["values"] = img_names
         pro_choice = StringVar()
         pro_choice_box = ttk.Combobox(window, textvariable=pro_choice,
                                       postcommand=updateProChoice)
