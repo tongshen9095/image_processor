@@ -83,3 +83,14 @@ def getSelectedNames(processed):
         ans.append(img.name)
     ans.sort()
     return ans
+
+
+def delImg(img_name):
+    """Delete an image from the database.
+
+    Args:
+        img_name (str): Name of the image
+    """
+    img = Image.objects.raw({"_id": img_name}).first()
+    img.delete()
+    return

@@ -14,6 +14,7 @@ server_name = "http://127.0.0.1:5000"
 
 
 def mainWindow():
+    """Design a main Graphical User Interface."""
     root = Tk()
 
     # Add a main upload button
@@ -22,6 +23,7 @@ def mainWindow():
 
     # Add a main display buttun
     def popDisplayWindow():
+        """Pop a window to display the images."""
         dw = 500
         dh = 750
         windowsize = str(dw) + "x" + str(dh)
@@ -35,6 +37,7 @@ def mainWindow():
 
         # Add a choice box
         def updateChoice():
+            """Update the values of the combobox."""
             status, img_names = cgetNames()
             if status:
                 img_choice_box["values"] = img_names
@@ -59,6 +62,7 @@ def mainWindow():
 
         # Add an Info button
         def infoBtnCmd():
+            """Display image infomation."""
             img_name = img_choice.get()
             if not img_name:
                 msg = "Please select an image first."
@@ -77,6 +81,7 @@ def mainWindow():
 
         # Add a display button
         def displayBtnCmd():
+            """Display the image."""
             # Put a blank image
             img_obj = Image.open("./images/blank.png").resize((dw, dw))
             tk_img = ImageTk.PhotoImage(img_obj)
@@ -112,6 +117,7 @@ def mainWindow():
 
     # Add a main download button
     def popDownloadWindow():
+        """Pop an window to download the image."""
         dw = 500
         dh = 300
         windowsize = str(dw) + "x" + str(dh)
@@ -125,6 +131,7 @@ def mainWindow():
 
         # Add a choice box
         def updateChoice():
+            """Update the values of the combobox."""
             status, img_names = cgetNames()
             if status:
                 img_choice_box["values"] = img_names
@@ -136,6 +143,7 @@ def mainWindow():
 
         # Add a download button
         def downloadBtnCmd():
+            """Download the image."""
             img_name = img_choice.get()
             downloadHelper(img_name)
             return
@@ -151,6 +159,7 @@ def mainWindow():
 
     # Add a main process buttom
     def popProcessWindow():
+        """Pop an window to process the image."""
         dw = 500
         dh = 300
         windowsize = str(dw) + "x" + str(dh)
@@ -164,6 +173,7 @@ def mainWindow():
 
         # Add a choice box for original images
         def updateChoice():
+            """Update the values of the combobox."""
             status, img_names = cgetSelectedNames("0")
             if status:
                 org_choice_box["values"] = img_names
@@ -175,6 +185,7 @@ def mainWindow():
 
         # Add a process button
         def processBtnCmd():
+            """Process the image."""
             img_name = org_choice.get()
             if not img_name:
                 msg = "Please select an image first."
@@ -197,6 +208,7 @@ def mainWindow():
 
     # Add a main compare button
     def popCompareWindow():
+        """Pop an window to compare two images."""
         dw0 = 500
         dw = 1100
         dh = 750
@@ -216,6 +228,7 @@ def mainWindow():
 
         # Add a choice box for orginal images
         def updateOrgChoice():
+            """Update the values of the combobox."""
             status, img_names = cgetSelectedNames("0")
             if status:
                 org_choice_box["values"] = img_names
@@ -227,6 +240,7 @@ def mainWindow():
 
         # Add a choice box for processed images
         def updateProChoice():
+            """Update the values of the combobox."""
             status, img_names = cgetSelectedNames("1")
             if status:
                 pro_choice_box["values"] = img_names
@@ -262,6 +276,7 @@ def mainWindow():
 
         # Add an Info button for originl images
         def orgInfoBtnCmd():
+            """Display the information of the original image."""
             org_name = org_choice.get()
             if not org_name:
                 msg = "Please select an image first."
@@ -280,6 +295,7 @@ def mainWindow():
 
         # Add an Info button for processed images
         def proInfoBtnCmd():
+            """Display the image of the processed image."""
             pro_name = pro_choice.get()
             if not pro_name:
                 msg = "Please select an image first."
@@ -298,6 +314,7 @@ def mainWindow():
 
         # Add an display button for original images
         def orgDisplayBtnCmd():
+            """Display the original image."""
             # Put a blank image
             img_obj = Image.open("./images/blank.png").resize((dw0, dw0))
             tk_img = ImageTk.PhotoImage(img_obj)
@@ -329,6 +346,7 @@ def mainWindow():
 
         # Add an display button for processed images
         def proDisplayBtnCmd():
+            """Display the processed image."""
             # Put a blank image
             img_obj = Image.open("./images/blank.png").resize((dw0, dw0))
             tk_img = ImageTk.PhotoImage(img_obj)
@@ -362,6 +380,45 @@ def mainWindow():
     compare_btn = ttk.Button(root, text="Compare",
                              command=popCompareWindow)
     compare_btn.grid(column=4, row=0)
+
+    # Add an main delete buttun
+    def popDelWindow():
+        """Pop a window to delete the image."""
+        dw = 500
+        dh = 300
+        windowsize = str(dw) + "x" + str(dh)
+        window = Toplevel(root)
+        window.geometry(windowsize)
+
+        # Add a select label
+        select_label = ttk.Label(window, text="Select an image")
+        xp, yp = 15, 2
+        select_label.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a choice box
+        def updateChoice():
+            """Update the values of the combobox."""
+            status, img_names = cgetNames()
+            if status:
+                img_choice_box["values"] = img_names
+        img_choice = StringVar()
+        img_choice_box = ttk.Combobox(window, textvariable=img_choice,
+                                      postcommand=updateChoice)
+        xp, yp = 55, 2
+        img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a delete button
+        def delBtnCmd():
+            """Delete the image."""
+            img_name = img_choice.get()
+            delHelper(img_name)
+            return
+        del_btn = ttk.Button(window, text="Delete", command=delBtnCmd)
+        xp, yp = 40, 80
+        del_btn.place(x=dw*xp//100, y=dh*yp//100)
+        return
+    main_del_btn = ttk.Button(root, text="Delete", command=popDelWindow)
+    main_del_btn.grid(column=5, row=0)
 
     root.mainloop()
     return
@@ -407,7 +464,7 @@ def infoHelper(img_name):
 
 
 def downloadHelper(img_name):
-    """Help fill the function of download button.
+    """Help fulfill the function of download button.
 
     Args:
         img_name: Name of the selected image.
@@ -426,6 +483,24 @@ def downloadHelper(img_name):
         return
     transimg.b64_to_img(in_dict["b64str"], fpath)
     msg = "Success: Download the image."
+    messagebox.showinfo(message=msg)
+    return
+
+
+def delHelper(img_name):
+    """Help fulfill the function of delete button.
+
+    Args:
+        img_name: Name of the selected image.
+    """
+    if not img_name:
+        msg = "Please select an image first."
+        messagebox.showinfo(message=msg, icon="error")
+        return
+    status = cdelImg(img_name)
+    if not status:
+        return
+    msg = "Success: Delete the image."
     messagebox.showinfo(message=msg)
     return
 
@@ -509,8 +584,17 @@ def cprocessImg(img_name):
     return True
 
 
-def cgetSelectedNames(pro):
-    r = requests.get(server_name + "/api/all_imgs/" + pro)
+def cgetSelectedNames(processed):
+    """Get request from client site to get the names of selected image.
+
+    Args:
+        processed (str): "1" processed image, "0" unprocessed image.
+    Returns:
+        (tuple): tuple containing:
+            bool: True if the requests succeed else False.
+            list: An list of names of selected images.
+    """
+    r = requests.get(server_name + "/api/all_imgs/" + processed)
     if r.status_code != 200:
         msg = "Error: {} - {}".format(r.status_code, "unknown error")
         messagebox.showinfo(message=msg, icon="error")
@@ -518,6 +602,21 @@ def cgetSelectedNames(pro):
     ans = json.loads(r.text)
     ans = tuple(ans)
     return True, ans
+
+
+def cdelImg(img_name):
+    """Get request from client site to delete an image.
+
+    Arg:
+        img_name: name of the image.
+        bool: True if the requests succeed else False.
+    """
+    r = requests.get(server_name + "/api/del/{}".format(img_name))
+    if r.status_code != 200:
+        msg = "Error: {} - {}".format(r.status_code, "unknown error")
+        messagebox.showinfo(message=msg, icon="error")
+        return False
+    return True
 
 
 def imgResize(img_size, dw):
