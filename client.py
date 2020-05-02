@@ -215,22 +215,24 @@ def mainWindow():
         pro_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a choice box for orginal images
-        def updateChoice():
+        def updateOrgChoice():
             status, img_names = cgetSelectedNames("0")
             if status:
                 org_choice_box["values"] = img_names 
         org_choice = StringVar()
         org_choice_box = ttk.Combobox(window, textvariable=org_choice,
-                                      postcommand=updateChoice)
+                                      postcommand=updateOrgChoice)
         xp, yp = 25, 2
         org_choice_box.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a choice box for processed images
+        def updateProChoice():
+            status, img_names = cgetSelectedNames("1")
+            if status:
+                pro_choice_box["values"] = img_names 
         pro_choice = StringVar()
-        pro_choice_box = ttk.Combobox(window, textvariable=pro_choice)
-        status, img_names = cgetSelectedNames("1")
-        if status:
-            pro_choice_box["values"] = img_names
+        pro_choice_box = ttk.Combobox(window, textvariable=pro_choice,
+                                      postcommand=updateProChoice)
         xp, yp = 78, 2
         pro_choice_box.place(x=dw*xp//100, y=dh*yp//100)
 
