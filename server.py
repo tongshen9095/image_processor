@@ -110,4 +110,4 @@ if __name__ == "__main__":
     log_fpath = "develop.log"
     logging.basicConfig(filename=log_fpath, level=logging.INFO)
     db.initDb()
-    app.run(host="0.0.0.0")
+    app.run()
