@@ -162,18 +162,20 @@ def mainWindow():
         xp, yp = 15, 2
         select_label.place(x=dw*xp//100, y=dh*yp//100)
 
-        # Add a choice box
-        img_choice = StringVar()
-        img_choice_box = ttk.Combobox(window, textvariable=img_choice)
-        status, img_names = cgetSelectedNames("0")
-        if status:
-            img_choice_box["values"] = img_names
+        # Add a choice box for original images
+        def updateChoice():
+            status, img_names = cgetSelectedNames("0")
+            if status:
+                org_choice_box["values"] = img_names 
+        org_choice = StringVar()
+        org_choice_box = ttk.Combobox(window, textvariable=org_choice,
+                                      postcommand=updateChoice)
         xp, yp = 55, 2
-        img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
+        org_choice_box.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a process button
         def processBtnCmd():
-            img_name = img_choice.get()
+            img_name = org_choice.get()
             if not img_name:
                 msg = "Please select an image first."
                 messagebox.showinfo(message=msg, icon="error")
@@ -213,11 +215,13 @@ def mainWindow():
         pro_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a choice box for orginal images
+        def updateChoice():
+            status, img_names = cgetSelectedNames("0")
+            if status:
+                org_choice_box["values"] = img_names 
         org_choice = StringVar()
-        org_choice_box = ttk.Combobox(window, textvariable=org_choice)
-        status, img_names = cgetSelectedNames("0")
-        if status:
-            org_choice_box["values"] = img_names
+        org_choice_box = ttk.Combobox(window, textvariable=org_choice,
+                                      postcommand=updateChoice)
         xp, yp = 25, 2
         org_choice_box.place(x=dw*xp//100, y=dh*yp//100)
 
