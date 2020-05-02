@@ -509,8 +509,17 @@ def cprocessImg(img_name):
     return True
 
 
-def cgetSelectedNames(pro):
-    r = requests.get(server_name + "/api/all_imgs/" + pro)
+def cgetSelectedNames(processed):
+    """Get request from client site to get the names of selected image.
+
+    Args:
+        processed (str): "1" processed image, "0" unprocessed image.
+    Returns:
+        (tuple): tuple containing:
+            bool: True if the requests succeed else False.
+            list: An list of names of selected images.
+    """
+    r = requests.get(server_name + "/api/all_imgs/" + processed)
     if r.status_code != 200:
         msg = "Error: {} - {}".format(r.status_code, "unknown error")
         messagebox.showinfo(message=msg, icon="error")
