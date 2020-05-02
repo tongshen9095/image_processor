@@ -84,6 +84,7 @@ def getSelectedNames(processed):
     ans.sort()
     return ans
 
+
 def delImg(img_name):
     """Delete an image from the database.
 

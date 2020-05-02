@@ -81,6 +81,7 @@ def getSelectedNames(processed):
     ans = db.getSelectedNames(processed)
     return jsonify(ans)
 
+
 @app.route("/api/del/<img_name>")
 def delImg(img_name):
     db.delImg(img_name)
