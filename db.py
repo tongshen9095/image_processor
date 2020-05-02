@@ -43,6 +43,7 @@ def getNames():
     ans = []
     for img in imgs:
         ans.append(img.name)
+    ans.sort()
     return ans
 
 
@@ -95,4 +96,5 @@ def getSelectedNames(processed):
     ans = []
     for img in imgs:
         ans.append(img.name)
+    ans.sort()
     return ans
