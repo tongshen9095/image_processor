@@ -363,6 +363,42 @@ def mainWindow():
                              command=popCompareWindow)
     compare_btn.grid(column=4, row=0)
 
+    # Add an main delete buttun
+    def popDelWindow():
+        dw = 500
+        dh = 300
+        windowsize = str(dw) + "x" + str(dh)
+        window = Toplevel(root)
+        window.geometry(windowsize)
+
+        # Add a select label
+        select_label = ttk.Label(window, text="Select an image")
+        xp, yp = 15, 2
+        select_label.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a choice box
+        def updateChoice():
+            status, img_names = cgetNames()
+            if status:
+                img_choice_box["values"] = img_names
+        img_choice = StringVar()
+        img_choice_box = ttk.Combobox(window, textvariable=img_choice,
+                                      postcommand=updateChoice)
+        xp, yp = 55, 2
+        img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
+
+        # Add a delete button
+        def delBtnCmd():
+            img_name = img_choice.get()
+            delHelper(img_name)
+            return
+        del_btn = ttk.Button(window, text="Delete", command=delBtnCmd)
+        xp, yp = 40, 80
+        del_btn.place(x=dw*xp//100, y=dh*yp//100)
+        return
+    main_del_btn = ttk.Button(root, text="Delete", command=popDelWindow)
+    main_del_btn.grid(column=5, row=0)
+
     root.mainloop()
     return
 
