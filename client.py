@@ -529,6 +529,21 @@ def cgetSelectedNames(processed):
     return True, ans
 
 
+def cdelImg(img_name):
+    """Get request from client site to delete an image.
+
+    Arg:
+        img_name: name of the image.
+        bool: True if the requests succeed else False.
+    """
+    r = requests.get(server_name + "/api/del/{}".format(img_name))
+    if r.status_code != 200:
+        msg = "Error: {} - {}".format(r.status_code, "unknown error")
+        messagebox.showinfo(message=msg, icon="error")
+        return False
+    return True
+
+
 def imgResize(img_size, dw):
     """Resize the image based on the default window width.
 
