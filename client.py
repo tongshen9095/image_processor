@@ -124,11 +124,13 @@ def mainWindow():
         select_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a choice box
+        def updateChoice():
+            status, img_names = cgetNames()
+            if status:
+                img_choice_box["values"] = img_names 
         img_choice = StringVar()
-        img_choice_box = ttk.Combobox(window, textvariable=img_choice)
-        status, img_names = cgetNames()
-        if status:
-            img_choice_box["values"] = img_names
+        img_choice_box = ttk.Combobox(window, textvariable=img_choice,
+                                      postcommand=updateChoice)
         xp, yp = 55, 2
         img_choice_box.place(x=dw*xp//100, y=dh*yp//100)
 
