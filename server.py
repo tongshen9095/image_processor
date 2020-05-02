@@ -66,7 +66,7 @@ def processImg(img_name):
     inv_in_dict = transimg.makeDict(fname, inv_b64_str,
                                     in_dict["imgsize"], True)
     db.addImg(inv_in_dict)
-    return "Succeed: process the image"
+    return "Success: process the image"
 
 
 @app.route("/api/all_imgs/<processed>")
@@ -80,6 +80,11 @@ def getSelectedNames(processed):
     """
     ans = db.getSelectedNames(processed)
     return jsonify(ans)
+
+@app.route("/api/del/<img_name>")
+def delImg(img_name):
+    db.delImg(img_name)
+    return "Success: delete the image"
 
 
 def verifyInfo(in_dict, sample_dict):
