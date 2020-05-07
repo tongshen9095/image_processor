@@ -51,3 +51,12 @@ def test_hasImg(img_name, expt):
     assert ans == expt
     
 
+@pytest.mark.parametrize("img_name", [
+    (img_name1),
+    (img_name2),
+    (img_name3)
+])
+def test_delImg(img_name):
+    db.addImg(img_name)
+    db.delImg(img_name)
+    assert db.hasImg(img_name) == False
