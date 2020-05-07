@@ -22,7 +22,9 @@ def addImg(in_dict):
     """Add image to database.
 
     Args:
-         in_dict (dict): An dictionary.
+        in_dict (dict): An dictionary.
+    Returns:
+        str: name of the saved image.
     """
     img = Image(name=in_dict["name"],
                 b64str=in_dict["b64str"],
@@ -30,7 +32,7 @@ def addImg(in_dict):
                 processed=in_dict["processed"],
                 timestamp=in_dict["timestamp"])
     ans = img.save()
-    return ans
+    return ans.name
 
 
 def getNames():
@@ -92,14 +94,5 @@ def delImg(img_name):
         img_name (str): Name of the image
     """
     img = Image.objects.raw({"_id": img_name}).first()
-    img.delete()
-    return
-
-if __name__  == "__main__":
-    initDb()
-    in_dict = {"name": "test_img",
-               "b64str": "ABC",
-               "imgsize": "120X123",
-               "processed": False,
-               "timestamp": "2020-05-07"}
-    ans = addImg(in_dict)
+    ans = img.delete()
+    return ans.name
