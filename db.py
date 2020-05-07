@@ -29,8 +29,8 @@ def addImg(in_dict):
                 imgsize=in_dict["imgsize"],
                 processed=in_dict["processed"],
                 timestamp=in_dict["timestamp"])
-    img.save()
-    return
+    ans = img.save()
+    return ans
 
 
 def getNames():
@@ -94,3 +94,12 @@ def delImg(img_name):
     img = Image.objects.raw({"_id": img_name}).first()
     img.delete()
     return
+
+if __name__  == "__main__":
+    initDb()
+    in_dict = {"name": "test_img",
+               "b64str": "ABC",
+               "imgsize": "120X123",
+               "processed": False,
+               "timestamp": "2020-05-07"}
+    ans = addImg(in_dict)
