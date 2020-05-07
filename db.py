@@ -1,4 +1,5 @@
 from pymodm import connect, MongoModel, fields
+from pymodm import errors as pymodm_errors
 
 
 class Image(MongoModel):
@@ -9,11 +10,11 @@ class Image(MongoModel):
     timestamp = fields.CharField()
 
 
-def initDb():
+def initDb(db_name):
     """Connect to database."""
     print("Connecting to database...")
     connect("mongodb+srv://db_access:9095@bme547-tla9o.mongodb.net/"
-            "medicalimage?retryWrites=true&w=majority")
+            "{}?retryWrites=true&w=majority".format(db_name))
     print("Connected to database")
     return
 
@@ -92,7 +93,25 @@ def delImg(img_name):
 
     Args:
         img_name (str): Name of the image
+    Returns:
+        str: name of the deleted image.
     """
     img = Image.objects.raw({"_id": img_name}).first()
-    ans = img.delete()
-    return ans.name
+    img.delete()
+    return
+
+
+def hasImg(img_name):
+    """Check whether the database has the image.
+
+    Args:
+        name (str): img_name
+    Returns:
+        True if the database contains the image, False if not.
+    """
+    try: 
+        Image.objects.raw({"_id": img_name})
+        return True
+    except pymodm_errors.DoesNotExist:
+        return False
+
