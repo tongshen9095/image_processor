@@ -60,3 +60,16 @@ def test_delImg(in_dict):
     db.addImg(in_dict)
     db.delImg(in_dict["name"])
     assert db.hasImg(in_dict["name"]) == False
+
+
+@pytest.mark.parametrize("in_dict", [
+    (in_dict1),
+    (in_dict2),
+    (in_dict3)
+])
+def test_getImg(in_dict):
+    db.addImg(in_dict)
+    ans = db.getImg(in_dict["name"])
+    db.delImg(in_dict["name"])
+    assert ans == in_dict
+
