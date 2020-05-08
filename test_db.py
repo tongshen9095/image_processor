@@ -73,3 +73,11 @@ def test_getImg(in_dict):
     db.delImg(in_dict["name"])
     assert ans == in_dict
 
+
+def test_getNames():
+    db.addImg(in_dict1)
+    db.addImg(in_dict2)
+    db.addImg(in_dict3)
+    ans = db.getNames()
+    expt = [img_name1, img_name2, img_name3]
+    assert ans == expt
