@@ -11,6 +11,7 @@ The server is hosted on duke vm: `vcm-14274.vm.duke.edu`. [Here](https://drive.g
 
 ## APIs
 The server provides six APIs.
+
 - POST /api/new_img
  
   The API adds new images to database. `name` is the primary key.
@@ -35,6 +36,19 @@ The server provides six APIs.
     ["acl1.jpg","acl1_proecessed.jpg","esophagus 1.jpg"]
     ```
 
+- GET /api/all_imgs/<processed>
+
+    The API receives process status in URL, "0": unprocessed, "1": processed and returns a list of names of selected images. The list is sorted alphabetically.
+
+    Sample output when `processed = "1"`
+    ```
+    ["acl1_proecessed.jpg","synpic51041_proecessed.jpg"]
+    ```
+
+- GET /api/process_img/<img_name>
+
+    The API receives image name in URL and process the selected image.
+
 - GET /api/img/<img_name>
 
     The API receives image name in URL and returns image information in an dictionary.
@@ -48,19 +62,6 @@ The server provides six APIs.
         "processed": bool, # whether the image is processed or not
         "timestamp": str  # timestamp when adding the image
     }
-    ```
-
-- GET /api/process_img/<img_name>
-
-    The API receives image name in URL and process the selected image.
-
-- GET /api/all_imgs/<processed>
-
-    The API receives process status in URL, "0": unprocessed, "1": processed and returns a list of names of selected images. The list is sorted alphabetically.
-
-    Sample output when `processed = "1"`
-    ```
-    ["acl1_proecessed.jpg","synpic51041_proecessed.jpg"]
     ```
 
 - GET /api/del/<img_name>
