@@ -87,8 +87,8 @@ def test_getNames():
 
 
 @pytest.mark.parametrize("processed, expt", [
-    (1, [img_name2]),
-    (0, [img_name1, img_name3])
+    ("1", [img_name2]),
+    ("0", [img_name1, img_name3])
 ])
 def test_getSelectedNames(processed, expt):
     db.addImg(in_dict1)
