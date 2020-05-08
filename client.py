@@ -16,6 +16,7 @@ server_name = "http://127.0.0.1:5000"
 def mainWindow():
     """Design a main Graphical User Interface."""
     root = Tk()
+    root.title("Medical Image Database")
 
     # Add a main upload button
     upload_btn = ttk.Button(root, text="Upload", command=uploadBtnCmd)
@@ -29,6 +30,7 @@ def mainWindow():
         windowsize = str(dw) + "x" + str(dh)
         window = Toplevel(root)
         window.geometry(windowsize)
+        window.title("Display")
 
         # Add a select label
         select_label = ttk.Label(window, text="Select an image")
@@ -123,6 +125,7 @@ def mainWindow():
         windowsize = str(dw) + "x" + str(dh)
         window = Toplevel(root)
         window.geometry(windowsize)
+        window.title("Download")
 
         # Add a select label
         select_label = ttk.Label(window, text="Select an image")
@@ -165,6 +168,7 @@ def mainWindow():
         windowsize = str(dw) + "x" + str(dh)
         window = Toplevel(root)
         window.geometry(windowsize)
+        window.title("Process")
 
         # Add a select label
         select_label = ttk.Label(window, text="Select an image")
@@ -215,6 +219,7 @@ def mainWindow():
         windowsize = str(dw) + "x" + str(dh)
         window = Toplevel(root)
         window.geometry(windowsize)
+        window.title("Compare")
 
         # Add a select an orginal image label
         org_label = ttk.Label(window, text="Select an original image")
@@ -222,7 +227,7 @@ def mainWindow():
         org_label.place(x=dw*xp//100, y=dh*yp//100)
 
         # Add a select a processed image label
-        pro_label = ttk.Label(window, text="Select an processed image")
+        pro_label = ttk.Label(window, text="Select a processed image")
         xp, yp = 58, 2
         pro_label.place(x=dw*xp//100, y=dh*yp//100)
 
@@ -389,6 +394,7 @@ def mainWindow():
         windowsize = str(dw) + "x" + str(dh)
         window = Toplevel(root)
         window.geometry(windowsize)
+        window.title("Delete")
 
         # Add a select label
         select_label = ttk.Label(window, text="Select an image")
