@@ -80,4 +80,22 @@ def test_getNames():
     db.addImg(in_dict3)
     ans = db.getNames()
     expt = [img_name1, img_name2, img_name3]
+    db.delImg(img_name1)
+    db.delImg(img_name2)
+    db.delImg(img_name3)
+    assert ans == expt
+
+
+@pytest.mark.parametrize("processed, expt", [
+    (1, [img_name2]),
+    (0, [img_name1, img_name3])
+])
+def test_getSelectedNames(processed, expt):
+    db.addImg(in_dict1)
+    db.addImg(in_dict2)
+    db.addImg(in_dict3)
+    ans = db.getSelectedNames(processed)
+    db.delImg(img_name1)
+    db.delImg(img_name2)
+    db.delImg(img_name3)
     assert ans == expt
