@@ -109,9 +109,8 @@ def hasImg(img_name):
     Returns:
         True if the database contains the image, False if not.
     """
-    try: 
+    try:
         Image.objects.raw({"_id": img_name}).first()
         return True
     except pymodm_errors.DoesNotExist:
         return False
-

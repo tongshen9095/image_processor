@@ -49,7 +49,7 @@ def test_hasImg(img_name, expt):
     db.delImg(img_name1)
     db.delImg(img_name2)
     assert ans == expt
-    
+
 
 @pytest.mark.parametrize("in_dict", [
     (in_dict1),
@@ -59,7 +59,7 @@ def test_hasImg(img_name, expt):
 def test_delImg(in_dict):
     db.addImg(in_dict)
     db.delImg(in_dict["name"])
-    assert db.hasImg(in_dict["name"]) == False
+    assert not db.hasImg(in_dict["name"])
 
 
 @pytest.mark.parametrize("in_dict", [
