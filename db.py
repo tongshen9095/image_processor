@@ -1,4 +1,5 @@
 from pymodm import connect, MongoModel, fields
+from pymodm import errors as pymodm_errors
 
 
 class Image(MongoModel):
@@ -9,11 +10,11 @@ class Image(MongoModel):
     timestamp = fields.CharField()
 
 
-def initDb():
+def initDb(db_name):
     """Connect to database."""
     print("Connecting to database...")
     connect("mongodb+srv://db_access:9095@bme547-tla9o.mongodb.net/"
-            "medicalimage?retryWrites=true&w=majority")
+            "{}?retryWrites=true&w=majority".format(db_name))
     print("Connected to database")
     return
 
@@ -22,15 +23,17 @@ def addImg(in_dict):
     """Add image to database.
 
     Args:
-         in_dict (dict): An dictionary.
+        in_dict (dict): An dictionary.
+    Returns:
+        str: name of the saved image.
     """
     img = Image(name=in_dict["name"],
                 b64str=in_dict["b64str"],
                 imgsize=in_dict["imgsize"],
                 processed=in_dict["processed"],
                 timestamp=in_dict["timestamp"])
-    img.save()
-    return
+    ans = img.save()
+    return ans.name
 
 
 def getNames():
@@ -90,7 +93,24 @@ def delImg(img_name):
 
     Args:
         img_name (str): Name of the image
+    Returns:
+        str: name of the deleted image.
     """
     img = Image.objects.raw({"_id": img_name}).first()
     img.delete()
     return
+
+
+def hasImg(img_name):
+    """Check whether the database has the image.
+
+    Args:
+        name (str): img_name
+    Returns:
+        True if the database contains the image, False if not.
+    """
+    try:
+        Image.objects.raw({"_id": img_name}).first()
+        return True
+    except pymodm_errors.DoesNotExist:
+        return False
