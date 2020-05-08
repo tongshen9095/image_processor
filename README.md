@@ -12,7 +12,7 @@ The server is hosted on duke vm: `vcm-14274.vm.duke.edu`. [Here](https://drive.g
 ## APIs
 The server provides six APIs.
 
-- POST /api/new_img
+- POST `/api/new_img`
  
   The API adds new images to database. `name` is the primary key.
 
@@ -27,7 +27,7 @@ The server provides six APIs.
   }
   ```
 
-- GET /api/all_imgs
+- GET `/api/all_imgs`
    
     The API gets a list of images names storing in the database. The list is sorted alphabetically.
 
@@ -45,11 +45,11 @@ The server provides six APIs.
     ["acl1_proecessed.jpg","synpic51041_proecessed.jpg"]
     ```
 
-- GET /api/process_img/<img_name>
+- GET `/api/process_img/<img_name>`
 
     The API receives image name in URL and process the selected image.
 
-- GET /api/img/<img_name>
+- GET `/api/img/<img_name>`
 
     The API receives image name in URL and returns image information in an dictionary.
 
@@ -64,7 +64,7 @@ The server provides six APIs.
     }
     ```
 
-- GET /api/del/<img_name>
+- GET `/api/del/<img_name>`
 
     The API receives image name in URL and deletes the image in database.
 
