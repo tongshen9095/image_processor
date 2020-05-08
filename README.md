@@ -36,7 +36,7 @@ The server provides six APIs.
     ["acl1.jpg","acl1_proecessed.jpg","esophagus 1.jpg"]
     ```
 
-- GET /api/all_imgs/<processed>
+- GET `/api/all_imgs/<processed>`
 
     The API receives process status in URL, "0": unprocessed, "1": processed and returns a list of names of selected images. The list is sorted alphabetically.
 
