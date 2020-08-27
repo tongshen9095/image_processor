@@ -1,4 +1,6 @@
-# Medical Image Database
+# Medical Image Processor
+
+## [Project Demo](https://drive.google.com/file/d/1h9aNJgtQ7ay0TcS8B0Wji6i-VyG1j_MW/view?usp=sharing) 
 
 The program builds a medical image database. With the GUI, user can
 - Upload an image
@@ -7,7 +9,7 @@ The program builds a medical image database. With the GUI, user can
 - Process an image, i.e. invert an image
 - Compare two images
 
-The server is hosted on duke vm: `vcm-14274.vm.duke.edu`. [Here](https://drive.google.com/file/d/1h9aNJgtQ7ay0TcS8B0Wji6i-VyG1j_MW/view?usp=sharing) is a video demo for the program.
+The server is hosted on duke vm: `vcm-14274.vm.duke.edu`. 
 
 ## APIs
 The server provides six APIs.
